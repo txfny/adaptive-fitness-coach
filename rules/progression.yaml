@@ -1,157 +1,461 @@
-# Progression Rules
-# Anchored to current working baselines as of March 2026.
-# All increments assume successful completion of prescribed reps
-# at stated RPE threshold. See per-modality rules below.
+# Progression Rules — v2 (Body Recomposition Focus)
+#
+# Goal: more defined abs, leaner legs, less arm jiggle, stay lean.
+# This is body recomp — build muscle in target areas while staying lean.
+# Strength training is the priority. Cardio is supplemental.
+#
+# User: 5'0", 105–110 lbs, 24yo, on Tyblume (combined OC).
+# Equipment: home gym (most days), Planet Fitness (Tuesdays).
 
 # ─── GLOBAL RULES ────────────────────────────────────────────────────────────
 
 global:
-  weekly_volume_cap: "No more than 10% increase in total weekly tonnage (strength) or distance (running) in any single week."
+  weekly_volume_cap: "No more than 10% increase in total weekly tonnage in any single week."
   deload_schedule: "Every 4th week: reduce volume 40–50%, maintain load intensity."
-  auto_deload_trigger: "If RPE >= 9 for 2 consecutive sessions of the same type, trigger deload regardless of schedule."
+  auto_deload_trigger: "If RPE >= 9 for 2 consecutive strength sessions, trigger deload regardless of schedule."
+  training_frequency: "4–5 days per week: 3 strength, 1–2 cardio (running or elliptical)."
+  rest_days: "Minimum 2 per week. Recovery is where muscle builds."
+  periodization_block: "Block 1 — Hypertrophy (weeks 1–8): 8–12 rep ranges, moderate loads, progressive overload."
   citation_key: gabbett_2016_acute_chronic
 
-# ─── STRENGTH PROGRESSION ────────────────────────────────────────────────────
+# ─── WEEKLY STRUCTURE ─────────────────────────────────────────────────────────
+
+weekly_template:
+  description: >
+    Suggested weekly layout. Adjust based on readiness and schedule.
+    The three strength days are the non-negotiable core.
+  days:
+    monday:
+      type: strength
+      focus: "Lower body + core"
+      location: home_gym
+    tuesday:
+      type: strength
+      focus: "Upper body + accessories"
+      location: planet_fitness
+      priority_note: >
+        Tuesday is the ONLY day with cables, barbells, lat pulldown, and
+        full dumbbell rack. Prioritize exercises that need this equipment
+        FIRST in the session. Do not leave lat pulldown or cable work for
+        the end where it gets cut short.
+    wednesday:
+      type: rest_or_cardio
+      focus: "Active recovery — elliptical + YouTube, easy walk, or full rest"
+      location: home_gym
+    thursday:
+      type: strength
+      focus: "Full body or weak-point emphasis (abs, triceps, hamstrings)"
+      location: home_gym
+    friday:
+      type: cardio
+      focus: "Running (mood/music session) or elliptical"
+      location: home_gym
+      notes: >
+        This is the mood-based cardio day. Pick running or elliptical based
+        on how you feel. No forced progression. If running, maintain current
+        pace/duration. If elliptical, zone 2 while watching YouTube.
+    saturday:
+      type: rest
+    sunday:
+      type: rest_or_light_cardio
+      focus: "Walk, light elliptical, mobility, or full rest"
+
+  flexibility_notes:
+    - "This is a template, not a prison. Swap days based on schedule and readiness."
+    - "If you miss a strength day, don't double up — just shift the week."
+    - "Cardio days are optional if readiness is LOW. Rest is always productive."
+    - "If you feel great on a rest day and want to move, light elliptical or walking is fine."
+
+# ─── STRENGTH PROGRESSION MODEL ──────────────────────────────────────────────
 
 strength:
   model: double_progression
+  block: hypertrophy
+  rep_range: 8–12
   description: >
-    Increase reps first within the prescribed range. Once the top of the
-    range is hit with RPE ≤ 7, increase load and reset reps to the bottom
-    of the range. This protects against loading too fast before the
-    movement pattern is grooved.
+    Increase reps first within the 8–12 range. Once 12 reps are hit on all
+    sets with RPE ≤ 7, increase load and reset reps to 8. This builds
+    muscle volume (hypertrophy) which is what creates the "toned" look.
   rpe_rules:
     - condition: all_prescribed_reps_completed AND rpe <= 7
-      action: advance (increase reps or load per double_progression model)
-      note: "RPE 7 = 3 reps left in tank. This is the threshold for readiness to progress."
-    - condition: all_prescribed_reps_completed AND rpe >= 8 AND rpe <= 9
-      action: hold (same load, same rep target next session)
+      action: advance (increase reps or load per double progression)
+    - condition: all_prescribed_reps_completed AND rpe 8–9
+      action: hold (same load, same rep target)
     - condition: rpe == 10 OR reps_failed
-      action: reduce load 10%, add 1 set at reduced load, reset rep target to bottom of range
+      action: reduce load 10%, add 1 set at reduced load
   citation_key: zourdos_2016_rpe
 
-  exercises:
-    romanian_deadlift:
-      equipment: home_dumbbells
-      current_load: "25 lbs each hand (50 lbs total)"
-      rep_range: 8–12
-      sets: 3
-      increment: "5 lbs per dumbbell (10 lbs total)"
-      notes: >
-        Focus on hip hinge pattern and hamstring stretch depth before chasing
-        load. When 12 reps at RPE ≤ 7, increase to 30 lbs each.
+# ─── EXERCISE POOL ───────────────────────────────────────────────────────────
+#
+# Organized by target area aligned to user goals.
+# Each exercise has: equipment, current load, rep range, sets, increment,
+# substitutions, sequencing priority, and notes.
 
-    hip_thrust:
-      equipment: home_dumbbells
-      current_load: "35 lbs each dumbbell"
-      rep_range: 10–15
-      sets: 3
-      increment: "5 lbs per dumbbell"
-      notes: >
-        Loaded with dumbbells — heavier than typical for this setup, which
-        is already strong. When 15 reps at RPE ≤ 7, increase to 40 lbs each.
-        Long-term: evaluate Smith machine at Planet Fitness for heavier loading.
+exercises:
 
-    overhead_press:
-      equipment: barbell
-      current_load: "20 lbs barbell"
-      rep_range: 8–10
-      sets: 3
-      increment: "5 lbs"
-      notes: >
-        At home gym. Verify this is loaded barbell (not just the bar).
-        Standard barbell is 45 lbs — if current is just bar + plates clarify.
-        When 10 reps at RPE ≤ 7, increase to 25 lbs.
+  # ── LOWER BODY (leaner legs, hamstrings, glutes) ──────────────────────────
 
-    dumbbell_row:
-      equipment: home_dumbbells
-      current_load: "20 lbs each side"
-      rep_range: 10–12
-      sets: 3
-      increment: "5 lbs"
-      notes: >
-        Unilateral. Progress each side independently if strength asymmetry
-        develops. When 12 reps at RPE ≤ 7, increase to 25 lbs.
-
-    goblet_squat:
-      equipment: home_dumbbells
-      current_load: "25 lb dumbbell"
-      rep_range: 10–12
-      sets: 3
-      increment: "5 lbs"
-      notes: >
-        When 12 reps at RPE ≤ 7, increase to 30 lbs. At home gym.
-        On Planet Fitness Tuesdays, can substitute barbell back squat or
-        Smith machine squat when ready for heavier loading.
-
-    lat_pulldown:
-      equipment: planet_fitness_cable
-      current_load: "60 lbs"
-      rep_range: 10–12
-      sets: 3
-      increment: "5 lbs"
-      notes: >
-        Planet Fitness only (Tuesdays). When 12 reps at RPE ≤ 7, increase to 65 lbs.
-        On home gym days: substitute dumbbell row or bodyweight pull-up progressions.
-
-# ─── RUNNING PROGRESSION ─────────────────────────────────────────────────────
-
-running:
-  current_baseline:
-    duration_minutes: 20
-    pace_mph: 5.2–5.5
-    peak_hr_bpm: 188–200
-    notes: "Can sustain 20+ min. Building toward longer sustained efforts at 5.5 mph."
-
-  goal: "Extend sustained duration at 5.5 mph. Pace is secondary once duration is established."
-
-  progression_model:
-    primary_variable: duration
-    target_pace: 5.5
-    pace_lock: >
-      Do not increase pace and duration in the same session or same week.
-      Pace target is 5.5 mph — hold this while extending duration.
-
-  duration_rules:
-    - condition: previous_session_rpe <= 7 AND cycle_phase IN [follicular, ovulatory]
-      action: add 2–3 minutes to next session
-    - condition: previous_session_rpe == 8
-      action: hold same duration, same pace
-    - condition: previous_session_rpe >= 9
-      action: reduce duration 5 minutes; do not reduce pace
-    - condition: cycle_phase IN [late_luteal, menstrual]
-      action: hold duration (no extension this phase); maintain 5.5 mph if readiness allows
-
-  hr_guidance:
-    max_observed_bpm: 200
-    zone_4_threshold_bpm: 160  # 80% of 200
-    zone_5_threshold_bpm: 180  # 90% of 200
+  romanian_deadlift:
+    target: hamstrings, glutes, lower back
+    equipment: [home_dumbbells, planet_fitness_dumbbells]
+    current_load: "25 lbs each hand"
+    rep_range: 8–12
+    sets: 3
+    increment: "5 lbs per dumbbell"
+    sequence_priority: 2  # after squats (avoid pre-fatiguing lower back)
+    substitutions:
+      - "Single-leg RDL (bodyweight or light dumbbell) — if lower back is sore"
+      - "Good mornings with light barbell (Planet Fitness) — barbell hinge alternative"
     notes: >
-      Running at 5.5 mph currently hits zone 4–5 (HR 188–200). This is
-      appropriate for building aerobic capacity but is high-intensity work —
-      factor this into weekly load accounting. Don't stack high-intensity
-      running on top of high-intensity strength days.
+      Key hamstring builder. Sequence AFTER squats to avoid pre-fatiguing
+      the lower back before a squat pattern needs it for stability.
 
-  weekly_structure:
-    max_hard_running_days: 2
-    recovery_run_option: "30–40 min walk or elliptical at zone 2 (HR 120–140)"
+  hip_thrust:
+    target: glutes
+    equipment: [home_dumbbells]  # Smith machine ruled out Mar 13
+    current_load: "35 lbs each dumbbell"
+    rep_range: 10–15
+    sets: 3
+    increment: "5 lbs per dumbbell"
+    sequence_priority: 3
+    substitutions:
+      - "Glute bridge with dumbbell on hips — if bench not available"
+      - "Bulgarian split squat — if equipment is limited to bodyweight"
+      - "Cable pull-through (Planet Fitness) — glute-focused hinge"
     notes: >
-      On deload weeks, reduce run duration 40%, maintain pace.
+      Dumbbell floor/bench setup at home. Smith machine ruled out.
+      At Planet Fitness, cable pull-through is a good alternative.
 
-  citation_key: gabbett_2016_acute_chronic
+  goblet_squat:
+    target: quads, glutes, core
+    equipment: [home_dumbbells, planet_fitness_dumbbells]
+    current_load: "25 lb dumbbell"
+    rep_range: 10–12
+    sets: 3
+    increment: "5 lbs"
+    sequence_priority: 1  # compound movement, do first
+    substitutions:
+      - "Barbell back squat (Planet Fitness) — when ready for heavier loading"
+      - "Smith machine squat (Planet Fitness) — if barbell form not yet solid"
+      - "Bodyweight squat to box — deload substitute"
+    notes: >
+      Primary squat pattern. Sequence FIRST in lower body sessions.
+      Transition to barbell back squat on Tuesdays when goblet squat
+      exceeds 40 lbs (dumbbell gets awkward to hold heavier).
+
+  leg_curl:
+    target: hamstrings (isolation)
+    equipment: [planet_fitness_machine]
+    current_load: "TBD — assess on first session"
+    rep_range: 10–15
+    sets: 3
+    increment: "5 lbs"
+    sequence_priority: 4
+    substitutions:
+      - "Nordic hamstring curl (home — use pull-up bar base or furniture to anchor feet)"
+      - "Slider leg curl (home — towel on floor)"
+    notes: >
+      NEW EXERCISE. Planet Fitness Tuesdays. Directly targets the
+      hamstring area the user wants to lean out. Assess starting weight
+      on first session.
+
+  sumo_squat:
+    target: inner thighs (adductors), glutes, quads
+    equipment: [home_dumbbells, planet_fitness_dumbbells]
+    current_load: "25 lb dumbbell (held at center)"
+    rep_range: 10–12
+    sets: 3
+    increment: "5 lbs"
+    sequence_priority: 2
+    substitutions:
+      - "Wide-stance goblet squat — same movement, different cue"
+      - "Cable sumo squat (Planet Fitness)"
+    notes: >
+      NEW EXERCISE. Targets inner thigh area specifically. Wide stance,
+      toes pointed out 30–45 degrees. Focus on adductor stretch at the
+      bottom of the movement.
+
+  # ── UPPER BODY (arms, back, shoulders) ────────────────────────────────────
+
+  overhead_press:
+    target: shoulders, triceps
+    equipment: [home_barbell]
+    current_load: "20 lb fixed barbell (bar only, no plates)"
+    rep_range: 8–10
+    sets: 3
+    increment: "5 lbs (when available — may need to switch to dumbbells for smaller jumps)"
+    sequence_priority: 1  # compound, do first
+    substitutions:
+      - "Dumbbell shoulder press (10–15 lbs each) — smaller increments possible"
+      - "Machine shoulder press (Planet Fitness)"
+    notes: >
+      Confirmed: 20 lb fixed barbell, no plates. Failed +5 and +2.5 on
+      Mar 10. Hold at 20 lbs until 3×10 at RPE ≤ 7. Consider switching
+      to dumbbell press for finer increment control (2.5 lb jumps).
+
+  dumbbell_row:
+    target: back, biceps
+    equipment: [home_dumbbells, planet_fitness_dumbbells]
+    current_load: "20 lbs each side"
+    rep_range: 10–12
+    sets: 3
+    increment: "5 lbs"
+    sequence_priority: 2
+    substitutions:
+      - "Cable row (Planet Fitness) — better loading options"
+      - "Inverted row (pull-up bar at home, feet on floor) — bodyweight alternative"
+    notes: "Unilateral. Progress each side independently if asymmetry develops."
+
+  lat_pulldown:
+    target: back (lats), biceps
+    equipment: [planet_fitness_cable]
+    current_load: "60 lbs"
+    rep_range: 10–12
+    sets: 3
+    increment: "5 lbs"
+    sequence_priority: 1  # PRIORITY — only available Tuesdays, do it FIRST
+    substitutions:
+      - "Pull-up negatives (home — jump to top, lower slowly for 3–5 sec)"
+      - "Resistance band lat pulldown (home — band over pull-up bar)"
+    notes: >
+      Planet Fitness ONLY. This exercise must be prioritized early in the
+      Tuesday session — it was cut to 1 set on Mar 13. Schedule it as
+      the first or second exercise on Tuesdays. Full 3 sets non-negotiable.
+
+  tricep_dip:
+    target: triceps (back of arm)
+    equipment: [home_bench_or_chair, planet_fitness_dip_station]
+    current_load: "bodyweight"
+    rep_range: 8–12
+    sets: 3
+    increment: "add reps first, then add dumbbell on lap for load"
+    sequence_priority: 3
+    substitutions:
+      - "Bench dip (home — hands on bench/chair, feet on floor)"
+      - "Overhead tricep extension with dumbbell"
+    notes: >
+      NEW EXERCISE. Directly targets the tricep area (back of upper arm)
+      the user wants to tighten. Start with bench dips at home, progress
+      to full dips when ready.
+
+  overhead_tricep_extension:
+    target: triceps (long head — back of arm)
+    equipment: [home_dumbbells]
+    current_load: "TBD — start with 10–15 lb dumbbell"
+    rep_range: 10–15
+    sets: 3
+    increment: "2.5–5 lbs"
+    sequence_priority: 4
+    substitutions:
+      - "Cable tricep pushdown (Planet Fitness) — better isolation"
+      - "Skull crushers with light barbell (Planet Fitness)"
+    notes: >
+      NEW EXERCISE. Isolation for the long head of the tricep — the
+      part that shows most when the arm is at rest. Two-hand grip on
+      one dumbbell, extend overhead.
+
+  cable_pushdown:
+    target: triceps
+    equipment: [planet_fitness_cable]
+    current_load: "TBD — assess on first session"
+    rep_range: 12–15
+    sets: 3
+    increment: "5 lbs"
+    sequence_priority: 3
+    substitutions:
+      - "Resistance band pushdown (home — band over pull-up bar)"
+    notes: >
+      NEW EXERCISE. Planet Fitness Tuesdays. Pair with lat pulldown
+      for an efficient superset if time is tight.
+
+  # ── CORE (ab definition) ──────────────────────────────────────────────────
+
+  hanging_leg_raise:
+    target: lower abs, hip flexors
+    equipment: [home_pull_up_bar]
+    current_load: "bodyweight"
+    rep_range: 10–12
+    sets: 3
+    increment: "add reps → add ankle weights → add dumbbell between feet"
+    sequence_priority: 1
+    substitutions:
+      - "Captain's chair leg raise (Planet Fitness)"
+      - "Lying leg raise (floor — if pull-up bar unavailable)"
+    notes: >
+      Already in program. For ab DEFINITION, this needs progressive
+      overload — not just more reps forever. Once 3×12 is easy, add
+      light ankle weights or hold a light dumbbell between feet.
+
+  knee_raise:
+    target: lower abs
+    equipment: [home_pull_up_bar]
+    current_load: "bodyweight"
+    rep_range: 5–10
+    sets: 3
+    increment: "add reps → convert to full leg raises"
+    sequence_priority: 2
+    substitutions:
+      - "Reverse crunch (floor)"
+    notes: "Progress toward full hanging leg raises over time."
+
+  dead_bug:
+    target: deep core stability, transverse abdominis
+    equipment: [bodyweight]
+    current_load: "bodyweight"
+    rep_range: 10 each side
+    sets: 3
+    increment: "add reps → add light dumbbell in hands → add ankle weights"
+    sequence_priority: 3
+    substitutions:
+      - "Bird dog — similar anti-extension pattern from all fours"
+    notes: "Fundamental core stability. Controls the 'pulling in' look of defined abs."
+
+  plank_hip_dip:
+    target: obliques
+    equipment: [bodyweight]
+    current_load: "bodyweight"
+    rep_range: 20 (10 each side)
+    sets: 3
+    increment: "add reps → slow tempo (3 sec per dip)"
+    sequence_priority: 4
+    notes: "Added in Mar 12 session. Keep in rotation for oblique definition."
+
+  stomach_vacuum:
+    target: transverse abdominis (deepest core layer)
+    equipment: [bodyweight]
+    current_load: "bodyweight"
+    rep_range: "10 sec hold"
+    sets: 3
+    increment: "increase hold time by 5 sec"
+    sequence_priority: 5
+    notes: >
+      Targets the TVA — the muscle that pulls the stomach flat and creates
+      the tight waistline look. Progress from 10 sec → 15 → 20 → 30 sec holds.
+
+  cable_crunch:
+    target: upper abs (rectus abdominis)
+    equipment: [planet_fitness_cable]
+    current_load: "TBD — assess on first session"
+    rep_range: 12–15
+    sets: 3
+    increment: "5 lbs"
+    sequence_priority: 2
+    substitutions:
+      - "Weighted crunch with dumbbell on chest (home)"
+    notes: >
+      NEW EXERCISE. Planet Fitness Tuesdays. Loaded ab work is
+      essential for definition — bodyweight core alone won't build
+      enough muscle to show through. Cable crunches are the most
+      direct loaded ab exercise.
+
+  pallof_press:
+    target: anti-rotation core stability, obliques
+    equipment: [planet_fitness_cable]
+    current_load: "TBD — light, 10–15 lbs"
+    rep_range: 10 each side
+    sets: 3
+    increment: "2.5–5 lbs"
+    sequence_priority: 3
+    substitutions:
+      - "Resistance band pallof press (home — band anchored to pull-up bar post)"
+    notes: >
+      NEW EXERCISE. Anti-rotation work builds the deep core stability
+      that creates a tight, defined midsection. Light weight, focus on
+      bracing and controlling the rotation.
+
+# ─── CARDIO ───────────────────────────────────────────────────────────────────
+
+cardio:
+  role: supplemental
+  description: >
+    Cardio supports recomp (caloric expenditure, cardiovascular health, mood)
+    but is NOT the driver of the aesthetic goal. Strength training is.
+    Cardio is mood-based: pick running or elliptical based on how you feel.
+
+  running:
+    current_baseline:
+      duration_minutes: 20
+      pace_mph: 5.2–5.5
+      peak_hr_bpm: 188–200
+    goal: "Maintain for mood and cardiovascular health. No forced progression."
+    frequency: "1–2x per week, when you want it"
+    progression: >
+      No mandatory duration or pace increases. If you feel great and want
+      to push, go for it. If it feels like a chore today, do elliptical
+      instead or skip it. Running is a tool for mood, not a box to check.
+    notes: >
+      Peak HR 188–200 is zone 4–5. This is high-intensity cardio.
+      On days when you run, this counts as a hard session — don't stack
+      it with heavy lower body strength on the same day.
+
+  elliptical:
+    description: "Steady-state zone 2 cardio while watching YouTube."
+    duration: "20–40 min, whatever feels right"
+    intensity: "Conversational pace — if you can watch YouTube comfortably, you're in zone 2"
+    hr_target: "120–140 bpm (roughly 60–70% of max HR 200)"
+    frequency: "As often as you want — active recovery days, warm-up, or standalone"
+    notes: >
+      This is the ideal active recovery cardio. Low impact, low stress,
+      burns calories without eating into muscle recovery. Can be done on
+      rest days without compromising strength sessions.
+
+# ─── EXERCISE SEQUENCING RULES ────────────────────────────────────────────────
+
+sequencing:
+  rules:
+    - "Compound movements first (squats, deadlifts, presses, rows)"
+    - "Isolation exercises after compounds (curls, extensions, lateral raises)"
+    - "Core at the END of the session (core fatigue before compounds = injury risk)"
+    - "On Planet Fitness Tuesdays: equipment-exclusive exercises FIRST (lat pulldown, cables)"
+    - "Never sequence RDL immediately before goblet squat (lower back pre-fatigue)"
+    - "Supersets are fine for accessories but not for heavy compounds"
+  example_lower_day: "Goblet squat → Sumo squat → RDL → Hip thrust → Core circuit"
+  example_upper_day_tuesday: "Lat pulldown → Cable pushdown → OHP → DB row → Cable crunch → Pallof press"
+  example_full_body: "Goblet squat → OHP → RDL → DB row → Tricep extension → Core circuit"
+
+# ─── WARM-UP PROTOCOL ─────────────────────────────────────────────────────────
+
+warmup:
+  general:
+    - "5 min light cardio (treadmill walk or elliptical) to raise core temperature"
+    - "Dynamic stretches: leg swings, arm circles, hip circles, bodyweight squats (10 each)"
+  before_strength:
+    - "First exercise: 1 warm-up set at 50% working weight × 10 reps"
+    - "Second warm-up set at 75% working weight × 5 reps"
+    - "Then working sets"
+  notes: >
+    Warm-up sets are not counted toward working volume. They groove the
+    movement pattern and prep the joints. Skip them at your own risk.
+
+# ─── DELOAD PROTOCOL ──────────────────────────────────────────────────────────
+
+deload:
+  scheduled: "Every 4th week of the training block"
+  method: "Reduce sets by 40–50% (e.g., 3 sets → 2 sets). Keep the SAME weight on the bar."
+  rationale: >
+    Deload protects against accumulated fatigue and allows adaptation to
+    consolidate. Maintaining load while reducing volume preserves neural
+    adaptations while giving connective tissue a break.
+  auto_trigger: "2 consecutive strength sessions with overall RPE >= 9"
+  what_deload_looks_like:
+    strength: "Same exercises, same weight, 2 sets instead of 3, RPE cap at 6"
+    cardio: "Elliptical only (zone 2). No running unless you genuinely want to."
+    core: "Reduce to 2 exercises, 2 sets each. Maintain quality."
 
 # ─── EQUIPMENT-DAY MAPPING ───────────────────────────────────────────────────
 
 equipment_days:
   tuesday:
     location: Planet Fitness
-    available: [smith_machine, cables, barbells, full_dumbbell_rack, lat_pulldown, machines]
+    available: [smith_machine, cables, barbells, full_dumbbell_rack, lat_pulldown, machines, leg_curl]
+    must_do: [lat_pulldown, cable_pushdown_or_cable_crunch]
     preferred_focus: >
-      Use Tuesday for exercises that benefit from heavier barbell or cable work:
-      lat pulldown, cable rows, barbell squats, Smith machine hip thrusts.
+      Upper body + cable accessories. Lat pulldown FIRST. Cable work
+      second. This is the only day with these tools — don't waste it.
+      Leg curl for hamstring isolation if time allows.
   other_days:
     location: Home gym
     available: [pull_up_bar, dumbbells, treadmill, elliptical, machines]
     preferred_focus: >
-      Dumbbell strength circuits, treadmill running, elliptical cardio.
-      Pull-up bar for bodyweight pulling progressions.
+      Lower body strength, dumbbell upper body, core circuits,
+      treadmill running, elliptical cardio.

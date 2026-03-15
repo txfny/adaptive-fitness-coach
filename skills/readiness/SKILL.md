@@ -1,62 +1,68 @@
-# Readiness Agent
-# Takes a validated snapshot and scores readiness. Deterministic rules only.
+# Readiness Agent — v2
+# Pure function: snapshot → readiness tier + reasoning.
 
 ---
 
 ## PURPOSE
 
-Run the snapshot through `rules/readiness.yaml` and output a readiness tier (LOW / MODERATE / HIGH) with an explicit reasoning chain. This agent does not plan workouts — it only assesses readiness.
+Run the snapshot through `rules/readiness.yaml` and output a readiness tier (LOW / MODERATE / HIGH) with an explicit reasoning chain.
 
 ---
 
 ## INPUT
 
-A validated snapshot object (from the Snapshot Agent or provided directly).
+Validated snapshot from the Snapshot Agent.
 
-Required fields: `hrv_ms`, `rhr_bpm`, `rhr_7day_avg` (or `rhr_delta`), `sleep_hours`.
-Optional but influential: `subjective_energy`.
-
----
-
-## SCORING PROCEDURE
-
-1. Evaluate each signal independently against `rules/readiness.yaml`:
-   - HRV → which tier does it map to?
-   - RHR delta → which tier?
-   - Sleep hours → which tier?
-
-2. Apply conflict resolution: **lowest signal wins**.
-   - If HRV says HIGH but sleep says MODERATE → final is MODERATE.
-   - If any single signal says LOW → final is LOW.
-
-3. Subjective energy override check:
-   - If objective signals say HIGH but `subjective_energy ≤ 3` → flag the conflict, apply MODERATE.
-   - If objective signals say MODERATE but `subjective_energy ≥ 8` → note it but do NOT upgrade. Log for calibration.
-   - Subjective energy can downgrade but never upgrade. Conservative by default.
+Required: `hrv_ms`, `rhr_bpm` (or `rhr_delta`), `sleep_hours`.
+Influential: `symptom_load`, `subjective_energy`.
 
 ---
 
-## OUTPUT FORMAT
+## SCORING — INDIVIDUALIZED BASELINE MODEL
+
+**HRV scoring uses the user's own rolling baseline, not fixed thresholds.**
+
+1. Get the current baseline (14-day rolling mean and SD, or cold start values if < 14 days of data).
+   - Cold start: mean 57 ms, SD 4.5 ms (from Mar 5–14 data)
+2. Compare today's HRV to baseline:
+   - **HIGH:** within 0.5 SD of mean or above (~55+ ms at cold start)
+   - **MODERATE:** 0.5–1.5 SD below mean (~50–55 ms at cold start)
+   - **LOW:** > 1.5 SD below mean (~below 50 ms at cold start)
+
+**RHR and sleep use the same thresholds as v1** (already individualized via delta).
+
+**Symptom load is a NEW signal:**
+- 0–3: no impact
+- 4–7: can downgrade to MODERATE
+- 8–12: can downgrade to LOW
+
+3. Apply conflict resolution: **lowest signal wins.**
+4. Subjective energy override: can downgrade (energy ≤ 3 with HIGH → MODERATE), never upgrade.
+
+---
+
+## OUTPUT
 
 ```
 Readiness Assessment:
-  HRV:       [value] ms → [tier] ([citation_key]: [one-line rationale])
-  RHR delta: [+value] bpm → [tier] ([citation_key]: [one-line rationale])
-  Sleep:     [value] hrs → [tier] ([citation_key]: [one-line rationale])
-  Energy:    [value]/10 → [conflict flag if applicable]
-  ─────────────────────────
-  Conflict resolution: lowest signal wins
+  HRV:         [X] ms | baseline: [mean] ± [SD] | [+/-X] SD → [tier]
+  RHR delta:   [+X] bpm → [tier]
+  Sleep:       [X] hrs → [tier]
+  Symptoms:    [load] → [impact or "no impact"]
+  Energy:      [X]/10 → [conflict flag if any]
+  ─────────────────────
   → Final readiness: [LOW / MODERATE / HIGH]
-  → Implication: [one sentence — what this means for today's session]
+  → What this means: [one sentence]
 ```
 
 ---
 
-## WHAT THIS AGENT DOES NOT DO
+## NO PHASE-BASED MODIFICATION
 
-- Does not check cycle phase (that's the Planner's job)
-- Does not build a workout
-- Does not read session history
-- Does not make subjective judgments beyond the explicit energy override rule
+On OC (Tyblume), there is no cycle phase intensity ceiling. Readiness tier is the ONLY intensity determinant. Pill pack day is logged for pattern detection but does not affect scoring.
 
-This agent is a pure function: snapshot in → readiness tier + reasoning out.
+---
+
+## FALLBACK
+
+If HRV is missing: score using RHR delta + sleep + symptom load + subjective energy. Note reduced confidence. The system still works — it's just less precise.

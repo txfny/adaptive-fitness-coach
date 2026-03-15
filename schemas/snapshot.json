@@ -2,74 +2,110 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "snapshot.json",
   "title": "Daily Snapshot",
-  "description": "The structured daily input object collected before each session. All downstream agents consume this — do not interpret data in this layer, only collect and validate.",
+  "description": "The structured daily input object collected before each session. Rebuilt for OC user with symptom tracking. All downstream agents consume this.",
   "type": "object",
-  "required": ["date", "hrv_ms", "rhr_bpm", "rhr_7day_avg", "sleep_hours", "cycle_day", "equipment_available"],
+  "required": ["date", "hrv_ms", "rhr_bpm", "sleep_hours", "subjective_energy", "equipment_available"],
   "properties": {
     "date": {
       "type": "string",
-      "format": "date",
-      "description": "Session date in YYYY-MM-DD format."
+      "format": "date"
     },
     "hrv_ms": {
       "type": "number",
       "minimum": 0,
-      "description": "Heart rate variability in milliseconds, from Apple Health or wearable. Use the overnight/morning reading, not a spot check. If Apple Health and wearable conflict, Apple Health reading wins."
+      "description": "Heart rate variability in ms, from Apple Health overnight/morning reading."
     },
     "rhr_bpm": {
       "type": "number",
       "minimum": 30,
       "maximum": 120,
-      "description": "Resting heart rate in beats per minute, from Apple Health morning reading."
+      "description": "Resting heart rate in bpm from Apple Health morning reading."
     },
     "rhr_7day_avg": {
       "type": "number",
-      "minimum": 30,
-      "maximum": 120,
-      "description": "7-day rolling average resting heart rate. Used to compute rhr_delta. Pulled from Apple Health weekly average."
+      "description": "7-day rolling average RHR. If unavailable, system uses stored rolling average from prior sessions."
     },
     "rhr_delta": {
       "type": "number",
-      "description": "Computed field: rhr_bpm minus rhr_7day_avg. Positive = elevated above baseline. Populated automatically — do not ask user for this."
+      "description": "Computed: rhr_bpm minus rhr_7day_avg. Do not ask user."
     },
     "sleep_hours": {
       "type": "number",
       "minimum": 0,
-      "maximum": 14,
-      "description": "Total sleep time in hours from last night, from Apple Health."
-    },
-    "sleep_quality": {
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 5,
-      "description": "Subjective sleep quality rating. 1 = very poor, 5 = excellent. Optional — if not provided, sleep_hours is the primary signal."
-    },
-    "cycle_day": {
-      "type": "integer",
-      "minimum": 1,
-      "maximum": 35,
-      "description": "Current day of menstrual cycle. Day 1 = first day of period. Used to determine cycle phase in cycle-phase.yaml."
+      "maximum": 14
     },
     "subjective_energy": {
       "type": "integer",
       "minimum": 1,
       "maximum": 10,
-      "description": "How does the user feel right now, energy-wise? 1 = exhausted, 10 = excellent. This can override or flag conflicts with objective signals — a HIGH HRV with energy 2/10 should trigger a MODERATE readiness flag."
+      "description": "How do you feel right now? 1 = exhausted, 10 = excellent."
+    },
+    "pill_pack_day": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 28,
+      "description": "Current day in the pill pack. Days 1–21 = active pills, 22–28 = placebo. Used for pattern detection over time, NOT for intensity ceilings."
+    },
+    "pill_phase": {
+      "type": "string",
+      "enum": ["active", "placebo"],
+      "description": "Computed from pill_pack_day. Active = days 1–21, Placebo = days 22–28."
+    },
+    "symptoms": {
+      "type": "object",
+      "description": "Daily symptom tracking. Each rated 0–3. Sum = symptom_load. Feeds into readiness scoring.",
+      "properties": {
+        "bloating": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "0 = none, 1 = mild, 2 = moderate, 3 = severe"
+        },
+        "gi_symptoms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Nausea, stomach cramps, diarrhea. 0–3."
+        },
+        "cramps_pain": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Menstrual cramps, breast tenderness, headache. 0–3."
+        },
+        "fatigue": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "Physical heaviness — distinct from subjective_energy. 0–3."
+        }
+      }
+    },
+    "symptom_load": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 12,
+      "description": "Computed: sum of all symptom scores. Do not ask user — calculate from symptoms object."
+    },
+    "mood": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "General mood. 1 = very low, 5 = great. Tracked for pattern detection."
     },
     "equipment_available": {
       "type": "string",
-      "enum": ["home_gym", "planet_fitness", "home_gym_treadmill_only", "bodyweight_only", "outdoor_only"],
-      "description": "What equipment is accessible today. Defaults to home_gym on non-Tuesday days and planet_fitness on Tuesdays — confirm if different."
+      "enum": ["home_gym", "planet_fitness", "bodyweight_only"],
+      "description": "Defaults to home_gym on non-Tuesday days, planet_fitness on Tuesdays."
     },
     "soreness": {
       "type": "object",
-      "description": "Optional muscle group soreness map. Informs exercise selection to avoid stacking load on acutely sore tissue.",
+      "description": "Muscle group soreness. Directly informs exercise selection — do not load sore areas heavy.",
       "properties": {
         "lower_body": {
           "type": "integer",
           "minimum": 0,
-          "maximum": 3,
-          "description": "0 = none, 1 = mild, 2 = moderate, 3 = significant"
+          "maximum": 3
         },
         "upper_body": {
           "type": "integer",
@@ -83,9 +119,14 @@
         }
       }
     },
+    "flow_status": {
+      "type": "string",
+      "enum": ["none", "light", "moderate", "heavy"],
+      "description": "Only relevant during placebo week. Tracked for iron deficiency awareness."
+    },
     "notes": {
       "type": "string",
-      "description": "Freetext. Anything else relevant — sick, stressed, unusual schedule, medication changes, travel. This is read by the Plan Agent for context."
+      "description": "Freetext. Stress, illness, schedule, fasted, etc."
     }
   }
 }

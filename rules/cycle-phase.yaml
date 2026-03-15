@@ -1,139 +1,100 @@
-# Cycle Phase Rules
-# Input: cycle_day (1–28)
-# Output: phase label, intensity_ceiling, recommended modalities, contraindications
+# Hormonal Context Rules — v2 (OC Mode)
 #
-# These are calibrated starting defaults. The system should track actual
-# performance by phase and flag divergence from these baselines over time.
-# User override is always permitted — log overrides to the feedback loop.
+# User is on Tyblume (combined oral contraceptive). This replaces the
+# natural 5-phase cycle model entirely.
+#
+# On combined OC:
+# - Endogenous estrogen and progesterone are suppressed
+# - Synthetic hormones are delivered at steady state during active pills
+# - Withdrawal bleed during placebo week is not a real menstrual period
+# - The hormonal rationale for phase-based intensity ceilings does NOT apply
+#
+# Instead: readiness scoring + symptom tracking drive everything.
+# Pill pack position is tracked so the retrospective engine can detect
+# patterns over time, but it does NOT set intensity ceilings.
 
-phases:
-  menstrual:
-    days: 1–5
-    label: "Menstrual"
-    intensity_ceiling: MODERATE
-    description: >
-      Estrogen and progesterone are at their lowest. Energy and pain tolerance
-      vary significantly person to person. Default to moderate intensity, but
-      if readiness signals are HIGH and subjective energy is good, allow the
-      user to push — log the result to calibrate this phase over time.
-    recommended_modalities:
-      - low-impact cardio (treadmill walk, elliptical)
-      - mobility and flexibility work
-      - light to moderate strength (technique focus, not PRs)
-    avoid:
-      - maximal efforts or PRs
-      - high-volume HIIT
-    override_conditions:
-      - condition: readiness == HIGH AND subjective_energy >= 7
-        result: allow full programming, log the session for phase calibration
-    running_guidance: >
-      Maintain current 5.5 mph pace — don't extend duration this phase.
-      Use elliptical as a lower-impact substitute if cramping or fatigue present.
-    citation_key: mcnulty_2020_cycle
+mode: oral_contraceptive
+medication: Tyblume
+type: combined_oc
 
-  follicular:
-    days: 6–13
-    label: "Follicular"
-    intensity_ceiling: HIGH
-    description: >
-      Rising estrogen improves pain tolerance, strength output, and mood.
-      This is the best window for progressive overload, new exercises, and
-      running duration increases. Prioritize the planned progression increments
-      in this phase.
-    recommended_modalities:
-      - heavy strength work and PRs
-      - running duration extension (add 2–3 min if RPE ≤ 7 last session)
-      - HIIT and conditioning
-      - skill acquisition (new movements, technique work under load)
-    avoid: []
-    override_conditions: []
-    running_guidance: >
-      Primary window for extending run duration. If last session was RPE ≤ 7,
-      add 2–3 min to sustained effort at 5.5 mph. This is where the 5.5 mph
-      base-building goal advances fastest.
-    citation_key: mcnulty_2020_cycle
+# ─── PILL PACK TRACKING ──────────────────────────────────────────────────────
 
-  ovulatory:
-    days: 14–16
-    label: "Ovulatory"
-    intensity_ceiling: HIGH
-    description: >
-      Peak estrogen and LH surge. Power output, explosiveness, and coordination
-      are at their highest. Note: core temperature is slightly elevated and
-      ligament laxity may increase ACL injury risk — warm up thoroughly,
-      avoid rushed eccentric loading.
-    recommended_modalities:
-      - power and explosive work
-      - heavy compound lifts
-      - sustained high-intensity running
-    avoid:
-      - rushed warm-ups
-      - ballistic movements without adequate warm-up
-    override_conditions: []
-    running_guidance: >
-      Good phase for tempo efforts. If pace-building is a goal, this is
-      the window to push slightly above 5.5 mph in intervals (e.g., 5.8–6.0 mph
-      for 2-min surges) while maintaining the base duration.
-    injury_note: >
-      Elevated estrogen increases ACL laxity. Include hip/glute activation
-      in warm-up. Monitor landing mechanics in plyometric work.
-    citation_key: mcnulty_2020_cycle
+pill_pack:
+  active_days: 1–21
+  placebo_days: 22–28
+  total_days: 28
 
-  early_luteal:
-    days: 17–21
-    label: "Early Luteal"
-    intensity_ceiling: HIGH
-    description: >
-      Progesterone rises alongside estrogen. Strength and endurance remain
-      good. Longer rest periods between sets may be needed. RPE-based
-      autoregulation is more reliable than fixed percentages this phase.
-    recommended_modalities:
-      - strength training (RPE-based, not % 1RM)
-      - sustained cardio at moderate pace
-      - moderate conditioning
-    avoid:
-      - fixed-load maximal efforts without RPE check
-    override_conditions: []
-    running_guidance: >
-      Maintain running duration — don't extend. Hold pace at 5.5 mph.
-      Use RPE as the primary metric: if effort feels harder than usual at
-      the same pace, that's valid data, not a failure.
-    citation_key: mcnulty_2020_cycle
+  active_phase:
+    label: "Active Pills"
+    hormone_state: "Steady-state synthetic estrogen + progestin"
+    intensity_ceiling: null  # No ceiling — readiness determines everything
+    notes: >
+      No expected performance variation from hormones during active pills.
+      Any symptoms (bloating, fatigue, mood) during this phase are likely
+      driven by diet, stress, sleep, or training load — not pill schedule.
+      Track symptoms to find the real pattern.
 
-  late_luteal:
-    days: 22–28
-    label: "Late Luteal"
-    intensity_ceiling: MODERATE
-    description: >
-      Both estrogen and progesterone drop. Fatigue, mood shifts, and reduced
-      glycogen utilization are common. Favor strength over HIIT. Longer rest
-      periods. This phase responds better to volume reduction than intensity
-      reduction — keep the weight on the bar, reduce sets if needed.
-    recommended_modalities:
-      - strength training (moderate volume, maintain intensity)
-      - low-intensity steady-state cardio
-      - mobility and recovery work
-    avoid:
-      - high-volume HIIT
-      - long runs at high effort
-    volume_adjustment: "reduce sets by 1 per exercise if fatigue is high; hold load"
-    override_conditions:
-      - condition: readiness == HIGH AND subjective_energy >= 7
-        result: allow MODERATE-HIGH, log for calibration
-    running_guidance: >
-      Reduce run duration by 3–5 min or switch to elliptical. Maintain
-      5.5 mph pace when running — don't chase duration gains this phase.
-    citation_key: mcnulty_2020_cycle
+  placebo_phase:
+    label: "Placebo Week"
+    hormone_state: "Synthetic hormone withdrawal — withdrawal bleed likely"
+    intensity_ceiling: null  # Still no hard ceiling — symptoms may warrant MODERATE
+    notes: >
+      Hormone withdrawal can cause real symptoms: fatigue, cramping, mood
+      shifts, bloating, heavier bleeding. These vary person to person.
+      The system does NOT assume you'll feel bad — it checks via symptom
+      scoring and readiness. If you feel great during placebo week, train
+      normally. If symptoms are high, readiness scoring will catch it.
 
-# Notes on calibration
-calibration_notes:
-  - >
-    These phase assignments assume a 28-day cycle. If cycle length differs,
-    scale proportionally (e.g., in a 32-day cycle, follicular extends to ~day 17).
-  - >
-    After 3+ full cycles of logged data, the system should compare actual
-    RPE and performance by phase against these defaults and flag any consistent
-    divergence for rule review.
-  - >
-    Cycle phase ceiling combines with readiness tier: final ceiling =
-    min(readiness_ceiling, cycle_phase_ceiling).
+# ─── HOW THIS REPLACES THE OLD MODEL ─────────────────────────────────────────
+#
+# Old model (natural cycle):
+#   menstrual → follicular → ovulatory → early luteal → late luteal
+#   Each phase had an intensity ceiling (MODERATE or HIGH)
+#   Phase determined by cycle day on a fixed 28-day calendar
+#
+# New model (OC):
+#   active pills → placebo week
+#   NO intensity ceilings from pill schedule
+#   Readiness tier (from readiness.yaml) is the ONLY intensity determinant
+#   Symptoms are tracked daily and feed into readiness scoring
+#   Pill pack day is logged so retrospective can detect individual patterns
+#
+# Why: Phase-based intensity ceilings were based on natural hormone
+# fluctuations (estrogen surge in follicular, progesterone in luteal).
+# On combined OC, these fluctuations are suppressed. Applying natural-cycle
+# rules to an OC user would be pseudoscience.
+#
+# Citation: Sims (2024 ROAR revised) — for OC users, readiness-based
+# training replaces cycle-synced training entirely.
+
+# ─── PATTERN DETECTION (RETROSPECTIVE) ───────────────────────────────────────
+
+pattern_detection:
+  enabled: true
+  notes: >
+    Even on OC, some women experience predictable symptom patterns tied to
+    their pill pack. After 2+ pill pack cycles of data, the retrospective
+    engine should analyze:
+    - Do symptoms cluster around specific pill pack days?
+    - Is placebo week consistently harder (higher RPE, lower energy)?
+    - Are there diet or sleep patterns that correlate with symptom days
+      more strongly than pill pack position?
+    The goal: find YOUR pattern, not assume one from a textbook.
+
+# ─── WITHDRAWAL BLEED TRACKING ───────────────────────────────────────────────
+
+bleed_tracking:
+  purpose: >
+    Track flow volume (light/moderate/heavy/absent) during placebo week.
+    Not for phase-based training decisions — for iron deficiency awareness.
+    Consistently heavy flow warrants periodic ferritin checks.
+  flow_scale:
+    - light: "Minimal flow, liners sufficient"
+    - moderate: "Regular flow, pads/tampons needed"
+    - heavy: "Soaking through pads/tampons, clots present"
+    - absent: "No withdrawal bleed — flag for awareness, common on some OCs"
+  iron_flag: >
+    If flow is consistently heavy for 3+ cycles, prompt: "Heavy withdrawal
+    bleeds can deplete iron over time. Consider checking your ferritin
+    levels at your next doctor visit."
+  citation_key: iron_deficiency_female_athletes
