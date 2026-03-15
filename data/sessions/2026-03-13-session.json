@@ -28,7 +28,7 @@
       "reps_completed": "10, 10, 10",
       "load_used": "25 lbs each dumbbell",
       "actual_rpe": null,
-      "notes": "Self-reported 'went well'. Reps estimated at 10 — not confirmed."
+      "notes": "Self-reported 'went well'. Reps estimated at 10 — not confirmed. Used dumbbells (normal setup) vs Mar 10 which had form breakdown — improvement is equipment familiarity, not strength gain."
     },
     {
       "name": "Dumbbell Row",
@@ -83,5 +83,5 @@
   "next_morning_recovery": null,
   "flag_for_rule_review": true,
   "flag_reason": "Hip thrusts skipped — couldn't set up bench against Smith machine. Moving to dumbbell floor/bench setup going forward. Smith machine ruled out for hip thrusts. Stomach vacuums not confirmed — possible hallucination from other Claude session. Lat pulldown only 1 set (should be 3).",
-  "notes": "RDL improved significantly from Mar 10 (8,7,4 → 10,10,10). OHP still fatiguing on set 3. Back fatigue on goblet squats — may need to sequence differently."
+  "notes": "RDL 'improvement' from Mar 10 (8,7,4 → 10,10,10) is misleading — Mar 10 used unfamiliar equipment setup, Mar 13 used normal dumbbells. Not a strength gain, equipment difference. OHP still fatiguing on set 3. Back fatigue on goblet squats — may need to sequence differently."
 }
