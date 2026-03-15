@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { Snapshot, ReadinessResult } from "@/lib/types";
 import { computeReadiness, DEFAULT_BASELINE } from "@/lib/readiness";
 import { SliderInput } from "./slider-input";
 import { SeverityPicker } from "./severity-picker";
 import { ReadinessGauge } from "./readiness-gauge";
+import { Pulse, HandOnHeart, Drop, Body, House, Pen, Sparkle } from "./line-art";
 
 export function SnapshotForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -44,80 +46,142 @@ export function SnapshotForm() {
       subjective_energy: energy,
       pill_pack_day: pillDay,
       pill_phase: pillPhase as "active" | "placebo",
-      symptoms: {
-        bloating,
-        gi_symptoms: gi,
-        cramps_pain: cramps,
-        fatigue,
-      },
+      symptoms: { bloating, gi_symptoms: gi, cramps_pain: cramps, fatigue },
       symptom_load: symptomLoad,
       mood,
       equipment_available: equipment,
-      soreness: {
-        lower_body: sorenessLower,
-        upper_body: sorenessUpper,
-        core: sorenessCore,
-      },
+      soreness: { lower_body: sorenessLower, upper_body: sorenessUpper, core: sorenessCore },
       notes: notes || undefined,
     };
-
     const result = computeReadiness(snapshot);
     setReadinessResult(result);
     setSubmitted(true);
-
-    // TODO: save to Supabase
   };
 
   if (submitted && readinessResult) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-5">
         <ReadinessGauge result={readinessResult} />
-        <button
-          onClick={() => setSubmitted(false)}
-          className="w-full py-3 rounded-xl bg-zinc-800 text-zinc-300 text-sm font-medium hover:bg-zinc-700 transition-colors"
-        >
-          Edit Snapshot
-        </button>
+        <div className="flex gap-3">
+          <button
+            onClick={() => setSubmitted(false)}
+            className="flex-1 py-3 rounded-2xl bg-cream-200/70 text-cream-700 text-sm font-medium hover:bg-cream-300/70 transition-colors border border-cream-300/50"
+          >
+            Edit
+          </button>
+          <Link
+            href="/session"
+            className="flex-1 py-3 text-center rounded-2xl bg-sage text-white text-sm font-semibold hover:bg-sage-dark transition-colors"
+          >
+            See Your Session
+          </Link>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
-      {/* Biometrics */}
-      <div className="space-y-4">
-        <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider">Biometrics</h3>
-        <SliderInput label="HRV" value={hrv} onChange={setHrv} min={20} max={120} unit="ms" />
-        <SliderInput label="Resting HR" value={rhr} onChange={setRhr} min={35} max={100} unit="bpm" />
-        <SliderInput label="Sleep" value={sleep} onChange={setSleep} min={0} max={14} step={0.5} unit="hrs" />
-      </div>
-
-      {/* Subjective */}
-      <div className="space-y-4">
-        <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider">How you feel</h3>
-        <SliderInput label="Energy" value={energy} onChange={setEnergy} min={1} max={10} />
-        <SliderInput label="Mood" value={mood} onChange={setMood} min={1} max={5} />
-      </div>
-
-      {/* Pill pack */}
-      <div className="space-y-4">
-        <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider">Pill Pack</h3>
-        <div className="flex items-center justify-between">
-          <SliderInput label="Day" value={pillDay} onChange={setPillDay} min={1} max={28} />
-        </div>
-        <p className="text-xs text-zinc-600">
-          {pillPhase === "active" ? "Active pills" : "Placebo week"}
+    <div className="space-y-7 max-w-lg">
+      {/* Context */}
+      <div className="flex gap-3 items-start rounded-2xl bg-sage/[0.05] border border-sage/12 p-4">
+        <Sparkle size={18} color="#7BAE7F" className="flex-shrink-0 mt-0.5" />
+        <p className="text-[13px] text-cream-700 font-light leading-relaxed">
+          <span className="text-sage-dark font-medium">Step 1 of 4</span> — enter your morning numbers. These determine how hard you should train today.
         </p>
+      </div>
+
+      {/* Biometrics */}
+      <div className="space-y-5">
+        <div className="flex items-center gap-2">
+          <Pulse size={18} color="#C08B6F" />
+          <div>
+            <h3 className="text-xs font-medium text-cream-700 uppercase tracking-widest">Biometrics</h3>
+            <p className="text-[11px] text-cream-500 font-light mt-0.5">from Apple Health</p>
+          </div>
+        </div>
+        <SliderInput
+          label="HRV"
+          value={hrv}
+          onChange={setHrv}
+          min={20}
+          max={120}
+          unit="ms"
+          hint={`your baseline: ${DEFAULT_BASELINE.hrv_mean} ± ${DEFAULT_BASELINE.hrv_sd} ms`}
+        />
+        <SliderInput
+          label="Resting HR"
+          value={rhr}
+          onChange={setRhr}
+          min={35}
+          max={100}
+          unit="bpm"
+          hint={`7-day avg: ${DEFAULT_BASELINE.rhr_7day_avg} bpm · ${Math.abs(rhr - DEFAULT_BASELINE.rhr_7day_avg) <= 2 ? "normal" : rhr > DEFAULT_BASELINE.rhr_7day_avg ? "elevated" : "below avg"}`}
+        />
+        <SliderInput
+          label="Sleep"
+          value={sleep}
+          onChange={setSleep}
+          min={0}
+          max={14}
+          step={0.5}
+          unit="hrs"
+          hint={sleep < 5 ? "under 5hrs flags LOW readiness" : sleep <= 7 ? "7+ hrs for HIGH readiness" : "solid recovery window"}
+        />
+      </div>
+
+      {/* Feel */}
+      <div className="space-y-5">
+        <div className="flex items-center gap-2">
+          <HandOnHeart size={18} color="#C08B6F" />
+          <div>
+            <h3 className="text-xs font-medium text-cream-700 uppercase tracking-widest">How you feel</h3>
+            <p className="text-[11px] text-cream-500 font-light mt-0.5">honest gut check</p>
+          </div>
+        </div>
+        <SliderInput
+          label="Energy"
+          value={energy}
+          onChange={setEnergy}
+          min={1}
+          max={10}
+          hint={energy <= 3 ? "low energy can downgrade readiness" : undefined}
+        />
+        <SliderInput label="Mood" value={mood} onChange={setMood} min={1} max={5} hint="tracked for patterns" />
+      </div>
+
+      {/* Pill */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-2">
+          <Drop size={18} color="#C08B6F" />
+          <h3 className="text-xs font-medium text-cream-700 uppercase tracking-widest">Pill Pack</h3>
+        </div>
+        <SliderInput label="Day" value={pillDay} onChange={setPillDay} min={1} max={28} />
+        <div className="flex items-center gap-2.5">
+          <span className={`w-2 h-2 rounded-full ${pillPhase === "active" ? "bg-lavender-soft" : "bg-amber-400"}`} />
+          <p className="text-xs text-cream-600 font-light">
+            {pillPhase === "active" ? "Active pills — no intensity ceiling from phase" : "Placebo week — watch for withdrawal symptoms"}
+          </p>
+        </div>
       </div>
 
       {/* Symptoms */}
       <div className="space-y-3">
-        <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider">
-          Symptoms
-          {symptomLoad > 0 && (
-            <span className="ml-2 text-zinc-600">load: {symptomLoad}/12</span>
-          )}
-        </h3>
+        <div className="flex items-center gap-2">
+          <FaceProfileIcon size={18} color="#C08B6F" />
+          <div>
+            <h3 className="text-xs font-medium text-cream-700 uppercase tracking-widest">
+              Symptoms
+              {symptomLoad > 0 && (
+                <span className={`ml-2 font-mono text-[11px] ${symptomLoad >= 8 ? "text-rose-soft" : symptomLoad >= 4 ? "text-amber-600" : "text-cream-500"}`}>
+                  {symptomLoad}/12
+                </span>
+              )}
+            </h3>
+            <p className="text-[11px] text-cream-500 font-light mt-0.5">
+              4+ reduces readiness · 8+ flags LOW
+            </p>
+          </div>
+        </div>
         <SeverityPicker label="Bloating" value={bloating} onChange={setBloating} />
         <SeverityPicker label="GI (nausea, cramps)" value={gi} onChange={setGi} />
         <SeverityPicker label="Pain (cramps, headache)" value={cramps} onChange={setCramps} />
@@ -126,51 +190,82 @@ export function SnapshotForm() {
 
       {/* Soreness */}
       <div className="space-y-3">
-        <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider">Soreness</h3>
+        <div className="flex items-center gap-2">
+          <Body size={18} color="#C08B6F" />
+          <div>
+            <h3 className="text-xs font-medium text-cream-700 uppercase tracking-widest">Soreness</h3>
+            <p className="text-[11px] text-cream-500 font-light mt-0.5">affects exercise selection, not readiness</p>
+          </div>
+        </div>
         <SeverityPicker label="Lower body" value={sorenessLower} onChange={setSorenessLower} />
         <SeverityPicker label="Upper body" value={sorenessUpper} onChange={setSorenessUpper} />
         <SeverityPicker label="Core" value={sorenessCore} onChange={setSorenessCore} />
       </div>
 
       {/* Equipment */}
-      <div className="space-y-2">
-        <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider">Equipment</h3>
-        <div className="grid grid-cols-2 gap-2">
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <House size={18} color="#C08B6F" />
+          <h3 className="text-xs font-medium text-cream-700 uppercase tracking-widest">Where today?</h3>
+        </div>
+        <div className="grid grid-cols-2 gap-3">
           {(["home_gym", "planet_fitness"] as const).map((opt) => (
             <button
               key={opt}
               type="button"
               onClick={() => setEquipment(opt)}
-              className={`py-2.5 px-3 rounded-xl text-sm font-medium border transition-all ${
+              className={`py-3.5 px-3 rounded-2xl text-sm font-medium border transition-all duration-200 ${
                 equipment === opt
-                  ? "bg-emerald-900/30 text-emerald-400 border-emerald-800"
-                  : "bg-zinc-900 text-zinc-500 border-zinc-800"
+                  ? "bg-sage/[0.06] text-sage-dark border-sage/20"
+                  : "bg-white text-cream-600 border-cream-300/50 hover:border-cream-400/60"
               }`}
             >
               {opt === "home_gym" ? "Home Gym" : "Planet Fitness"}
             </button>
           ))}
         </div>
+        <p className="text-[11px] text-cream-500 font-light">
+          {equipment === "planet_fitness"
+            ? "lat pulldown + cables available — prioritized first"
+            : "dumbbell-focused programming"}
+        </p>
       </div>
 
       {/* Notes */}
       <div className="space-y-2">
-        <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider">Notes</h3>
+        <div className="flex items-center gap-2">
+          <Pen size={18} color="#C08B6F" />
+          <h3 className="text-xs font-medium text-cream-700 uppercase tracking-widest">Notes</h3>
+        </div>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          placeholder="Fasted, stressed, didn't eat well..."
-          className="w-full bg-zinc-900 border border-zinc-800 rounded-xl p-3 text-sm text-zinc-200 placeholder:text-zinc-700 resize-none h-20 focus:outline-none focus:border-zinc-600"
+          placeholder="fasted, stressed, period starting..."
+          className="w-full bg-white border border-cream-300/50 rounded-2xl p-4 text-sm text-cream-900 placeholder:text-cream-400 resize-none h-20 focus:outline-none focus:border-sage/20 transition-colors font-light"
         />
       </div>
 
       {/* Submit */}
       <button
         onClick={handleSubmit}
-        className="w-full py-3.5 rounded-xl bg-emerald-500 text-zinc-950 font-semibold text-sm hover:bg-emerald-400 transition-colors"
+        className="w-full py-4 rounded-2xl bg-sage text-white font-semibold text-sm hover:bg-sage-dark transition-all duration-200"
       >
-        Check Readiness
+        Check in with your body
       </button>
     </div>
+  );
+}
+
+function FaceProfileIcon({ size, color }: { size: number; color: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 48 48" fill="none">
+      <path
+        d="M16 38c0-2 2-4 4-5 1-.5 2-1.5 2-3 0-1-1-2-1.5-3-.5-1.5 0-3 .5-4 1-2 3-3 5-3s4 1 5 3c.5 1 1 2.5.5 4-.5 1-1.5 2-1.5 3 0 1.5 1 2.5 2 3 2 1 4 3 4 5M20 20c-1-2-1-4 0-6 1.5-3 4-5 7-5 2 0 3.5.5 5 2 1 1 2 2.5 2 4.5 0 1.5-.5 3-1 4"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }

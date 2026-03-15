@@ -9,8 +9,8 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import { Sparkle, Pulse, FlexArm } from "@/components/line-art";
 
-// Demo data from the 7 historical sessions
 const hrvData = [
   { date: "Mar 5", hrv: 61 },
   { date: "Mar 6", hrv: 65.9 },
@@ -30,125 +30,125 @@ const runData = [
   { date: "Mar 14", duration: 21, peakHr: 188 },
 ];
 
-const liftData = [
-  { date: "Mar 10", exercise: "Goblet Squat", load: 25 },
-  { date: "Mar 13", exercise: "Goblet Squat", load: 25 },
-  { date: "Mar 10", exercise: "RDL", load: 25 },
-  { date: "Mar 13", exercise: "RDL", load: 25 },
-  { date: "Mar 10", exercise: "Hip Thrust", load: 35 },
-];
-
 const gobletData = [
   { date: "Mar 10", load: 25 },
   { date: "Mar 13", load: 25 },
   { date: "Mar 16", load: 30 },
 ];
 
+const chartTooltipStyle = {
+  backgroundColor: "#FFFCF7",
+  border: "1px solid #E8DDD0",
+  borderRadius: "12px",
+  fontSize: "12px",
+  color: "#3D352A",
+};
+
 export default function ProgressPage() {
   return (
-    <div className="py-6 space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-zinc-100">Progress</h1>
-        <p className="text-sm text-zinc-500 mt-1">Trends from your session data.</p>
+    <div className="py-8 lg:pl-16">
+      <div className="mb-8">
+        <h1 className="text-[28px] lg:text-[32px] font-semibold text-cream-900 tracking-tight">See how far you&apos;ve come</h1>
+        <p className="text-sm text-cream-600 mt-1 font-light">
+          Your trends, updated after each workout.
+        </p>
       </div>
 
-      {/* HRV Trend */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
-        <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider mb-4">
-          HRV Trend
-        </h3>
-        <ResponsiveContainer width="100%" height={200}>
-          <LineChart data={hrvData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-            <XAxis dataKey="date" tick={{ fill: "#71717a", fontSize: 11 }} />
-            <YAxis tick={{ fill: "#71717a", fontSize: 11 }} domain={[40, 80]} />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "#18181b",
-                border: "1px solid #27272a",
-                borderRadius: "8px",
-                fontSize: "12px",
-              }}
-            />
-            {/* Baseline band */}
-            <Line
-              type="monotone"
-              dataKey="hrv"
-              stroke="#34d399"
-              strokeWidth={2}
-              dot={{ fill: "#34d399", r: 4 }}
-              activeDot={{ r: 6 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-        <div className="flex items-center gap-4 mt-2 text-xs text-zinc-500">
-          <span>Baseline: 57 ms</span>
-          <span>Today: 74 ms (+3.8 SD)</span>
+      {/* Desktop: 2-col grid for charts */}
+      <div className="space-y-6 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
+        {/* Insight — spans full width */}
+        <div className="flex gap-3 items-start rounded-2xl bg-sage/[0.05] border border-sage/12 p-4 lg:col-span-2">
+          <Sparkle size={18} color="#7BAE7F" className="flex-shrink-0 mt-0.5" />
+          <p className="text-[13px] text-cream-700 font-light leading-relaxed">
+            <span className="text-sage-dark font-medium">Looking good:</span> HRV jumped to 74ms (+3.8 SD). Peak HR dropping at longer distances — your aerobic base is building.
+          </p>
         </div>
-      </div>
 
-      {/* Running */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
-        <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider mb-4">
-          Running — Peak HR at Distance
-        </h3>
-        <ResponsiveContainer width="100%" height={200}>
-          <LineChart data={runData.filter((d) => d.peakHr)}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-            <XAxis dataKey="date" tick={{ fill: "#71717a", fontSize: 11 }} />
-            <YAxis tick={{ fill: "#71717a", fontSize: 11 }} domain={[180, 205]} />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "#18181b",
-                border: "1px solid #27272a",
-                borderRadius: "8px",
-                fontSize: "12px",
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="peakHr"
-              stroke="#f59e0b"
-              strokeWidth={2}
-              dot={{ fill: "#f59e0b", r: 4 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-        <p className="text-xs text-emerald-400 mt-2">
-          Peak HR declining (200 → 188) at increasing distance — aerobic efficiency improving
-        </p>
-      </div>
+        {/* HRV */}
+        <div className="bg-white border border-cream-300/50 rounded-2xl p-5 card-soft">
+          <div className="flex items-center gap-2 mb-4">
+            <Pulse size={16} color="#7BAE7F" />
+            <h3 className="text-[10px] font-medium text-cream-600 uppercase tracking-widest">
+              HRV Trend
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={180}>
+            <LineChart data={hrvData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(232,221,208,0.6)" />
+              <XAxis dataKey="date" tick={{ fill: "#9C8B75", fontSize: 10 }} />
+              <YAxis tick={{ fill: "#9C8B75", fontSize: 10 }} domain={[40, 80]} />
+              <Tooltip contentStyle={chartTooltipStyle} />
+              <Line
+                type="monotone"
+                dataKey="hrv"
+                stroke="#7BAE7F"
+                strokeWidth={2}
+                dot={{ fill: "#7BAE7F", r: 3 }}
+                activeDot={{ r: 5 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+          <div className="flex items-center gap-4 mt-3 text-[11px] text-cream-600 font-light">
+            <span>Baseline: 57 ms</span>
+            <span className="text-sage">Today: 74 ms (+3.8 SD)</span>
+          </div>
+        </div>
 
-      {/* Goblet Squat Progression */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4">
-        <h3 className="text-xs font-medium text-zinc-500 uppercase tracking-wider mb-4">
-          Goblet Squat — Load Progression
-        </h3>
-        <ResponsiveContainer width="100%" height={160}>
-          <LineChart data={gobletData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#27272a" />
-            <XAxis dataKey="date" tick={{ fill: "#71717a", fontSize: 11 }} />
-            <YAxis tick={{ fill: "#71717a", fontSize: 11 }} domain={[20, 35]} unit=" lbs" />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: "#18181b",
-                border: "1px solid #27272a",
-                borderRadius: "8px",
-                fontSize: "12px",
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="load"
-              stroke="#a78bfa"
-              strokeWidth={2}
-              dot={{ fill: "#a78bfa", r: 4 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-        <p className="text-xs text-zinc-500 mt-2">
-          25 → 30 lbs (advanced today after 3×12 at RPE 7)
-        </p>
+        {/* Running */}
+        <div className="bg-white border border-cream-300/50 rounded-2xl p-5 card-soft">
+          <div className="flex items-center gap-2 mb-4">
+            <Pulse size={16} color="#C08B6F" />
+            <h3 className="text-[10px] font-medium text-cream-600 uppercase tracking-widest">
+              Running — Peak HR
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={180}>
+            <LineChart data={runData.filter((d) => d.peakHr)}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(232,221,208,0.6)" />
+              <XAxis dataKey="date" tick={{ fill: "#9C8B75", fontSize: 10 }} />
+              <YAxis tick={{ fill: "#9C8B75", fontSize: 10 }} domain={[180, 205]} />
+              <Tooltip contentStyle={chartTooltipStyle} />
+              <Line
+                type="monotone"
+                dataKey="peakHr"
+                stroke="#C08B6F"
+                strokeWidth={2}
+                dot={{ fill: "#C08B6F", r: 3 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+          <p className="text-[11px] text-sage mt-3 font-light">
+            200 → 188 bpm at increasing distance — your heart is getting stronger
+          </p>
+        </div>
+
+        {/* Goblet Squat */}
+        <div className="bg-white border border-cream-300/50 rounded-2xl p-5 card-soft lg:col-span-2">
+          <div className="flex items-center gap-2 mb-4">
+            <FlexArm size={16} color="#C4B5FD" />
+            <h3 className="text-[10px] font-medium text-cream-600 uppercase tracking-widest">
+              Goblet Squat — Load
+            </h3>
+          </div>
+          <ResponsiveContainer width="100%" height={140}>
+            <LineChart data={gobletData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(232,221,208,0.6)" />
+              <XAxis dataKey="date" tick={{ fill: "#9C8B75", fontSize: 10 }} />
+              <YAxis tick={{ fill: "#9C8B75", fontSize: 10 }} domain={[20, 35]} unit=" lbs" />
+              <Tooltip contentStyle={chartTooltipStyle} />
+              <Line
+                type="monotone"
+                dataKey="load"
+                stroke="#C4B5FD"
+                strokeWidth={2}
+                dot={{ fill: "#C4B5FD", r: 3 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+          <p className="text-[11px] text-cream-600 mt-3 font-light">
+            25 → 30 lbs after 3x12 at RPE 7 — your body did that
+          </p>
+        </div>
       </div>
     </div>
   );

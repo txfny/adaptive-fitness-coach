@@ -15,11 +15,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Coach",
-  description: "Adaptive fitness coaching system",
+  description: "Your personal fitness companion",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: "Coach",
   },
 };
@@ -28,7 +28,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#09090b",
+  themeColor: "#FFF8F0",
 };
 
 export default function RootLayout({
@@ -37,11 +37,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-950 text-zinc-100 min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-cream-100 text-cream-900 min-h-screen`}
       >
-        <main className="max-w-lg mx-auto px-4 pt-[env(safe-area-inset-top)] pb-24">
+        <main className="max-w-5xl mx-auto px-5 lg:px-8 pt-[env(safe-area-inset-top)] pb-28 lg:pb-8">
           {children}
         </main>
         <BottomNav />
