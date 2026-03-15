@@ -1,0 +1,53 @@
+{
+  "date": "2026-03-05",
+  "snapshot": {
+    "hrv_ms": 61,
+    "rhr_bpm": 53,
+    "rhr_7day_avg": 53,
+    "rhr_delta": 0,
+    "sleep_hours": null,
+    "cycle_day": 12,
+    "cycle_phase": "follicular",
+    "subjective_energy": null,
+    "equipment_available": "home_gym",
+    "notes": "Session not coached. Sleep tracker unreliable."
+  },
+  "data_confidence": {
+    "hrv_ms": "confirmed_apple_health",
+    "rhr_bpm": "confirmed_apple_health",
+    "rhr_7day_avg": "estimated",
+    "sleep_hours": "unknown",
+    "cycle_day": "estimated_from_day15_mar8",
+    "subjective_energy": "unknown"
+  },
+  "session_plan": null,
+  "actual_exercises": [
+    {
+      "name": "Treadmill Run",
+      "duration_minutes": 23,
+      "distance_m": 3188,
+      "calories": 145,
+      "notes": "No pace/interval breakdown available."
+    },
+    {
+      "name": "Core (unspecified)",
+      "duration_minutes": 21,
+      "calories": 88,
+      "notes": "Exercise breakdown unknown — session not coached."
+    }
+  ],
+  "running_data": {
+    "duration_minutes": 23,
+    "distance_m": 3188,
+    "peak_hr_bpm": null,
+    "avg_hr_bpm": null,
+    "notes": "Peak HR not pulled for this date."
+  },
+  "overall_rpe": null,
+  "energy_after": null,
+  "prediction_accuracy": null,
+  "post_workout_biometrics": null,
+  "next_morning_recovery": null,
+  "flag_for_rule_review": false,
+  "notes": "Pre-system session. Health data only, no coaching context. Exercise breakdown unknown."
+}

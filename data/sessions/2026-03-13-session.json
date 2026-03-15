@@ -1,0 +1,87 @@
+{
+  "date": "2026-03-13",
+  "snapshot": {
+    "hrv_ms": 53,
+    "rhr_bpm": 55,
+    "rhr_7day_avg": 53,
+    "rhr_delta": 2,
+    "sleep_hours": null,
+    "cycle_day": 20,
+    "cycle_phase": "early_luteal",
+    "subjective_energy": 5,
+    "equipment_available": "planet_fitness",
+    "notes": "Self-reported annoyed and bloated. Luteal cravings, significant bloating from eating previous night."
+  },
+  "data_confidence": {
+    "hrv_ms": "confirmed_apple_health",
+    "rhr_bpm": "confirmed_apple_health",
+    "rhr_7day_avg": "estimated",
+    "sleep_hours": "unknown_self_reported_fine",
+    "cycle_day": "confirmed",
+    "subjective_energy": "estimated"
+  },
+  "session_plan": null,
+  "actual_exercises": [
+    {
+      "name": "Romanian Deadlift",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 10",
+      "load_used": "25 lbs each dumbbell",
+      "actual_rpe": null,
+      "notes": "Self-reported 'went well'. Reps estimated at 10 — not confirmed."
+    },
+    {
+      "name": "Dumbbell Row",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 10",
+      "load_used": "20 lbs each",
+      "actual_rpe": null,
+      "notes": "Self-reported 'nailed it'."
+    },
+    {
+      "name": "Overhead Press (Barbell)",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 8",
+      "load_used": "20 lbs",
+      "actual_rpe": null,
+      "notes": "Set 3 dropped to 8 reps."
+    },
+    {
+      "name": "Goblet Squat",
+      "sets_completed": 3,
+      "reps_completed": "12, 12, 12",
+      "load_used": "25 lb dumbbell",
+      "actual_rpe": null,
+      "notes": "Set 1 easy, set 2 pushed, set 3 completed. Back fatigue noted."
+    },
+    {
+      "name": "Lat Pulldown",
+      "sets_completed": 1,
+      "reps_completed": "8 wide grip + 5 neutral grip",
+      "load_used": "60 lbs",
+      "actual_rpe": null,
+      "notes": "Added neutral grip variation by choice."
+    },
+    {
+      "name": "Hanging Leg Raises + Knee Raises (superset)",
+      "sets_completed": 3,
+      "reps_completed": "10+5, 10+5, 10+5",
+      "load_used": "bodyweight"
+    },
+    {
+      "name": "Dead Bug + Plank Hip Dips (superset)",
+      "sets_completed": 3,
+      "reps_completed": "10 each side + 20, 10 each side + 20, 10 each side + 20",
+      "load_used": "bodyweight"
+    }
+  ],
+  "running_data": null,
+  "overall_rpe": 7,
+  "energy_after": null,
+  "prediction_accuracy": null,
+  "post_workout_biometrics": null,
+  "next_morning_recovery": null,
+  "flag_for_rule_review": true,
+  "flag_reason": "Hip thrusts skipped — couldn't set up bench against Smith machine. Moving to dumbbell floor/bench setup going forward. Smith machine ruled out for hip thrusts. Stomach vacuums not confirmed — possible hallucination from other Claude session. Lat pulldown only 1 set (should be 3).",
+  "notes": "RDL improved significantly from Mar 10 (8,7,4 → 10,10,10). OHP still fatiguing on set 3. Back fatigue on goblet squats — may need to sequence differently."
+}

@@ -1,0 +1,75 @@
+{
+  "date": "2026-03-10",
+  "snapshot": {
+    "hrv_ms": 55,
+    "rhr_bpm": 53,
+    "rhr_7day_avg": 53,
+    "rhr_delta": 0,
+    "sleep_hours": null,
+    "cycle_day": 17,
+    "cycle_phase": "early_luteal",
+    "subjective_energy": 6,
+    "equipment_available": "planet_fitness",
+    "notes": "Woke up tired, grogginess noted. No tracker sleep data."
+  },
+  "data_confidence": {
+    "hrv_ms": "confirmed_apple_health",
+    "rhr_bpm": "confirmed_apple_health",
+    "rhr_7day_avg": "estimated",
+    "sleep_hours": "unknown_self_reported_fine",
+    "cycle_day": "confirmed",
+    "subjective_energy": "estimated"
+  },
+  "session_plan": null,
+  "actual_exercises": [
+    {
+      "name": "Romanian Deadlift",
+      "sets_completed": 3,
+      "reps_completed": "8, 7, 4",
+      "load_used": "25 lbs each dumbbell",
+      "actual_rpe": null,
+      "notes": "Form breakdown noted. Boyfriend form check flagged as priority."
+    },
+    {
+      "name": "Hip Thrust (Smith Machine)",
+      "sets_completed": 3,
+      "reps_completed": "12, 12, 12",
+      "load_used": "set 1: 25 lbs each side, sets 2-3: 35 lbs each side",
+      "actual_rpe": null,
+      "notes": "Progressed mid-session from 25 to 35 lbs."
+    },
+    {
+      "name": "Overhead Press (Machine)",
+      "sets_completed": 3,
+      "reps_completed": "10, 7, 10",
+      "load_used": "20 lbs (attempted +5 failed at 2, attempted +2.5 failed at 4, back to 20)",
+      "actual_rpe": null,
+      "notes": "Not ready to progress OHP. Set 2 dropped at 7, rested 2 min, set 3 recovered."
+    },
+    {
+      "name": "Dumbbell Row",
+      "sets_completed": 3,
+      "reps_completed": "mixed, 10, 10",
+      "load_used": "set 1: mixed (4@25R, 10@10R, 10@20L), sets 2-3: 20 lbs each",
+      "actual_rpe": null,
+      "notes": "Set 1 was exploratory — tried 25 lbs right hand, too heavy, dropped to 10, then 20 lbs left. Settled at 20 lbs."
+    },
+    {
+      "name": "Leg Press",
+      "sets_completed": 3,
+      "reps_completed": "12, 12, 12",
+      "load_used": "220 lbs",
+      "actual_rpe": null,
+      "notes": "Substituted for goblet squat. All sets completed clean."
+    }
+  ],
+  "running_data": null,
+  "overall_rpe": 7,
+  "energy_after": 3,
+  "prediction_accuracy": null,
+  "post_workout_biometrics": null,
+  "next_morning_recovery": null,
+  "flag_for_rule_review": true,
+  "flag_reason": "RDL form breakdown at 25 lbs — may need to deload to 20 lbs and rebuild. OHP failed at +5 and +2.5 — hold at 20 lbs confirmed. Afternoon session with boyfriend cancelled due to fatigue.",
+  "notes": "Too tired for planned afternoon chest/back session with boyfriend — walked instead. Core skipped, pull-up bar occupied."
+}

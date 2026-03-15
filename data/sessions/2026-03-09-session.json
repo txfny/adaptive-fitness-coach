@@ -1,0 +1,74 @@
+{
+  "date": "2026-03-09",
+  "snapshot": {
+    "hrv_ms": 57,
+    "rhr_bpm": 47,
+    "rhr_7day_avg": 52,
+    "rhr_delta": -5,
+    "sleep_hours": null,
+    "cycle_day": 16,
+    "cycle_phase": "ovulatory",
+    "subjective_energy": 8,
+    "equipment_available": "home_gym",
+    "notes": "Sleep fragmented per tracker but self-reported as fine."
+  },
+  "data_confidence": {
+    "hrv_ms": "confirmed_apple_health",
+    "rhr_bpm": "confirmed_apple_health",
+    "rhr_7day_avg": "estimated",
+    "sleep_hours": "unknown_self_reported_fine",
+    "cycle_day": "confirmed",
+    "subjective_energy": "estimated"
+  },
+  "session_plan": null,
+  "actual_exercises": [
+    {
+      "name": "Treadmill Run",
+      "sets_completed": 1,
+      "notes": "5 min walk @4mph → 12 min @5.2mph → 6 min @5.5mph. Total 17.5 min, 2453m, 142 kcal.",
+      "actual_rpe": 9
+    },
+    {
+      "name": "Hanging Leg Raises",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 10",
+      "load_used": "bodyweight",
+      "actual_rpe": null
+    },
+    {
+      "name": "Knee Raises",
+      "sets_completed": 3,
+      "reps_completed": "5, 5, 3",
+      "load_used": "bodyweight",
+      "actual_rpe": null,
+      "notes": "Set 3 dropped to 3 reps, recovered."
+    },
+    {
+      "name": "Stomach Vacuums",
+      "sets_completed": 3,
+      "reps_completed": "10 sec, 10 sec, 10 sec",
+      "load_used": "bodyweight",
+      "actual_rpe": null
+    }
+  ],
+  "running_data": {
+    "duration_minutes": 17.5,
+    "distance_m": 2453,
+    "pace_mph": 5.2,
+    "peak_hr_bpm": 197,
+    "avg_hr_bpm": null,
+    "rpe": 9,
+    "notes": "Progressive pace: 4mph walk → 5.2 → 5.5. Almost didn't make it."
+  },
+  "overall_rpe": 9,
+  "energy_after": 4,
+  "prediction_accuracy": null,
+  "post_workout_biometrics": {
+    "hr_at_stop_bpm": null,
+    "hr_1min_recovery_bpm": null,
+    "hrr_delta": null
+  },
+  "next_morning_recovery": null,
+  "flag_for_rule_review": false,
+  "notes": "Self-reported: 'almost didn't make it', 'definitely a push'. Hollow body hold dropped permanently. Fine after, not burnt out."
+}
