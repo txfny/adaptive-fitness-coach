@@ -62,7 +62,33 @@ If there's consistent divergence (3+ cycles of data), propose adjusting the phas
 
 ---
 
-## ANALYSIS 4 — OVERRIDE PATTERNS
+## ANALYSIS 4 — AUTONOMIC RECOVERY TRENDS
+
+This analysis uses post-workout biometrics to measure how different session types affect the body — a signal that RPE alone cannot capture.
+
+**Heart Rate Recovery (HRR):**
+- Track HRR (hr_at_stop − hr_1min_recovery) across sessions.
+- Group by workout type (strength, cardio, strength_and_cardio).
+- Group by cycle phase and readiness tier.
+- Flag declining HRR trend at the same or lower workload — this is an early overtraining signal before RPE or HRV catch it (Cole et al., 1999).
+- Benchmark: HRR ≥ 20 bpm = good, 12–19 = watch, < 12 = flag.
+
+**Next-Morning HRV Recovery:**
+- When next-morning data is available, compute HRV delta (next_morning_hrv − pre_workout_hrv).
+- A drop > 15% suggests the session imposed more autonomic stress than the readiness engine predicted (Stanley et al., 2013).
+- Group by workout type and phase: which combinations produce the most autonomic cost?
+- If a specific workout type consistently produces > 15% HRV suppression, flag it — the system may be over-prescribing for that modality at that readiness tier.
+
+**Next-Morning RHR Recovery:**
+- Compute RHR delta (next_morning_rhr − pre_workout_rhr).
+- Elevation > 5 bpm suggests incomplete recovery.
+- Cross-reference with the readiness prediction: if readiness said HIGH but next-morning RHR is elevated, the readiness engine missed something.
+
+**Output:** Add a "Recovery Response" section to the retrospective showing HRR trends and next-morning deltas by workout type and phase.
+
+---
+
+## ANALYSIS 5 — OVERRIDE PATTERNS
 
 Read `overrides_applied` from session plans.
 
@@ -124,6 +150,12 @@ CYCLE PHASE PERFORMANCE
   Best phase: [phase] (avg RPE [X], avg load delta [+/-X]%)
   Worst phase: [phase] (avg RPE [X])
   Divergence from rules: [yes/no, details]
+
+RECOVERY RESPONSE
+  Avg HRR: [X] bpm (trend: stable/improving/declining)
+  HRR by type: strength [X] | cardio [X] | mixed [X]
+  Next-morning HRV delta: avg [X]% (sessions with > 15% drop: [N])
+  Highest autonomic cost: [workout type] during [phase]
 
 OVERRIDE PATTERNS
   Total overrides: [N]

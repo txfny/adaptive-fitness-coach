@@ -155,3 +155,43 @@ citations:
       managing load across variable recovery states.
     used_in_rules: [progression.yaml — rpe_rules, SKILL.md — push-back language]
     verify: false
+
+  cole_1999_hrr:
+    key: cole_1999_hrr
+    authors: "Cole CR, Blackstone EH, Pashkow FJ, Snader CE, Lauer MS"
+    year: 1999
+    title: "Heart-Rate Recovery Immediately after Exercise as a Predictor of Mortality"
+    journal: "New England Journal of Medicine"
+    volume: 341
+    issue: 18
+    pages: 1351–1357
+    doi: "10.1056/NEJM199910283411804"
+    finding_summary: >
+      Heart rate recovery (HRR) — the drop in HR during the first minute after
+      exercise cessation — is a powerful marker of parasympathetic reactivation
+      and cardiovascular fitness. An abnormal HRR (< 12 bpm drop in 1 min) is
+      an independent predictor of mortality. In a training context, declining HRR
+      at the same workload over time signals autonomic fatigue and early overtraining.
+    used_in_rules: [post-session-log.json — hrr_delta, logger SKILL.md — HRR assessment]
+    verify: false
+
+  stanley_2013_post_exercise_hrv:
+    key: stanley_2013_post_exercise_hrv
+    authors: "Stanley J, Peake JM, Buchheit M"
+    year: 2013
+    title: "Cardiac Parasympathetic Reactivation Following Exercise: Implications for Training Prescription"
+    journal: "Sports Medicine"
+    volume: 43
+    issue: 12
+    pages: 1259–1277
+    doi: "10.1007/s40279-013-0083-4"
+    finding_summary: >
+      Post-exercise HRV suppression magnitude and recovery time reflect the
+      autonomic cost of a training session. Comparing next-morning HRV to
+      pre-workout baseline reveals whether the body has recovered. A next-morning
+      HRV drop > 15% suggests the session imposed greater autonomic stress than
+      anticipated, validating or contradicting the readiness engine's prediction.
+      Different exercise modalities produce different HRV suppression profiles
+      even at matched RPE — making this a more granular signal than RPE alone.
+    used_in_rules: [post-session-log.json — next_morning_recovery, retrospective SKILL.md — biometric analysis]
+    verify: false

@@ -50,6 +50,38 @@
       "type": "string",
       "description": "Optional detail on why the prediction was off. e.g., 'HRV said HIGH but legs were toast from yesterday's run.'"
     },
+    "post_workout_biometrics": {
+      "type": "object",
+      "description": "Biometric readings taken immediately after the workout. The delta between pre-workout snapshot and these values is a direct measure of autonomic stress imposed by the session. Collected every session.",
+      "properties": {
+        "hr_at_stop_bpm": {
+          "type": "integer",
+          "description": "Heart rate at the moment of stopping the last exercise. Read from Apple Watch."
+        },
+        "hr_1min_recovery_bpm": {
+          "type": "integer",
+          "description": "Heart rate 1 minute after stopping. The drop from hr_at_stop is Heart Rate Recovery (HRR). A drop of 20+ bpm in 1 min is normal for trained individuals. Declining HRR at the same workload over time is an early overtraining signal."
+        },
+        "hrr_delta": {
+          "type": "integer",
+          "description": "Computed: hr_at_stop_bpm minus hr_1min_recovery_bpm. Higher = better parasympathetic reactivation. Do not ask the user for this — compute it."
+        }
+      }
+    },
+    "next_morning_recovery": {
+      "type": "object",
+      "description": "Optional. Biometrics from the morning after the session. Comparing these to the pre-workout snapshot reveals whether the body has recovered from the session. Most valuable signal for validating readiness predictions.",
+      "properties": {
+        "hrv_ms": {
+          "type": "number",
+          "description": "Next-morning HRV from Apple Health. Compare to pre-workout HRV: a drop > 15% suggests the session imposed more stress than the readiness engine predicted."
+        },
+        "rhr_bpm": {
+          "type": "number",
+          "description": "Next-morning RHR. An elevation > 5bpm above pre-workout RHR suggests incomplete recovery."
+        }
+      }
+    },
     "running_data": {
       "type": "object",
       "description": "For sessions including treadmill work.",

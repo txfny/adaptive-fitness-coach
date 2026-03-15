@@ -34,9 +34,31 @@ For running sessions, also collect:
 
 ---
 
+## POST-WORKOUT BIOMETRICS (collect every session)
+
+These readings measure the autonomic cost of the session. Collect immediately after:
+
+1. **HR at stop** (bpm) — heart rate when the last exercise ends. Read from Apple Watch.
+2. **HR after 1 min rest** (bpm) — heart rate 1 minute after stopping.
+
+The system computes **Heart Rate Recovery (HRR)** = HR at stop − HR at 1 min. This is a validated marker of cardiovascular fitness and parasympathetic reactivation (Cole et al., 1999). A drop ≥ 20 bpm in 1 min is normal for trained individuals. If HRR declines over time at the same workload, it's an early overtraining signal.
+
+**Next-morning readings** (optional but high-value):
+Tell the user: "Tomorrow morning, check your HRV and RHR when you wake up and send them to me."
+
+3. **Next-morning HRV** (ms) — compared to pre-workout HRV. A drop > 15% suggests the session imposed more autonomic stress than the readiness engine predicted (Stanley et al., 2013).
+4. **Next-morning RHR** (bpm) — elevation > 5 bpm above pre-workout RHR suggests incomplete recovery (Plews et al., 2013).
+
+These next-morning readings can be appended to the log the following day. They do not need to be collected at the same time as the post-session feedback.
+
+---
+
 ## COMPUTED FIELDS
 
 After collecting, compute:
+- **HRR delta**: hr_at_stop − hr_1min_recovery. Higher = better recovery. Do not ask the user for this.
+- **Next-morning HRV delta** (when available): next_morning_hrv − pre_workout_hrv. Negative = suppression.
+- **Next-morning RHR delta** (when available): next_morning_rhr − pre_workout_rhr. Positive = elevated.
 - **Prescribed vs actual delta** for each exercise: did reps/load increase, decrease, or hold?
 - If overall RPE ≥ 9 for this session AND the previous session, flag auto-deload trigger.
 - If `prediction_accuracy` is `over_estimated` or `under_estimated`, increment the running tally for calibration (see Retrospective Agent).
@@ -54,10 +76,17 @@ Display a brief summary to the user:
 ```
 Session logged — [date]
   Overall RPE: [X]/10
+  HRR: [X] bpm drop in 1 min [good/watch/flag]
   Prediction: [accurate / over / under]
   Progression signals: [list exercises ready to advance next session]
+  Recovery check: [remind to send HRV + RHR tomorrow morning]
   Flags: [any flags, or "none"]
 ```
+
+**HRR assessment:**
+- Drop ≥ 20 bpm → "good" (healthy parasympathetic reactivation)
+- Drop 12–19 bpm → "watch" (adequate but declining trend would be concerning)
+- Drop < 12 bpm → "flag" (poor recovery response — note in log, factor into next readiness assessment)
 
 ---
 
