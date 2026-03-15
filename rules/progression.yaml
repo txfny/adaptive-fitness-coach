@@ -1,0 +1,157 @@
+# Progression Rules
+# Anchored to current working baselines as of March 2026.
+# All increments assume successful completion of prescribed reps
+# at stated RPE threshold. See per-modality rules below.
+
+# ─── GLOBAL RULES ────────────────────────────────────────────────────────────
+
+global:
+  weekly_volume_cap: "No more than 10% increase in total weekly tonnage (strength) or distance (running) in any single week."
+  deload_schedule: "Every 4th week: reduce volume 40–50%, maintain load intensity."
+  auto_deload_trigger: "If RPE >= 9 for 2 consecutive sessions of the same type, trigger deload regardless of schedule."
+  citation_key: gabbett_2016_acute_chronic
+
+# ─── STRENGTH PROGRESSION ────────────────────────────────────────────────────
+
+strength:
+  model: double_progression
+  description: >
+    Increase reps first within the prescribed range. Once the top of the
+    range is hit with RPE ≤ 7, increase load and reset reps to the bottom
+    of the range. This protects against loading too fast before the
+    movement pattern is grooved.
+  rpe_rules:
+    - condition: all_prescribed_reps_completed AND rpe <= 7
+      action: advance (increase reps or load per double_progression model)
+      note: "RPE 7 = 3 reps left in tank. This is the threshold for readiness to progress."
+    - condition: all_prescribed_reps_completed AND rpe >= 8 AND rpe <= 9
+      action: hold (same load, same rep target next session)
+    - condition: rpe == 10 OR reps_failed
+      action: reduce load 10%, add 1 set at reduced load, reset rep target to bottom of range
+  citation_key: zourdos_2016_rpe
+
+  exercises:
+    romanian_deadlift:
+      equipment: home_dumbbells
+      current_load: "25 lbs each hand (50 lbs total)"
+      rep_range: 8–12
+      sets: 3
+      increment: "5 lbs per dumbbell (10 lbs total)"
+      notes: >
+        Focus on hip hinge pattern and hamstring stretch depth before chasing
+        load. When 12 reps at RPE ≤ 7, increase to 30 lbs each.
+
+    hip_thrust:
+      equipment: home_dumbbells
+      current_load: "35 lbs each dumbbell"
+      rep_range: 10–15
+      sets: 3
+      increment: "5 lbs per dumbbell"
+      notes: >
+        Loaded with dumbbells — heavier than typical for this setup, which
+        is already strong. When 15 reps at RPE ≤ 7, increase to 40 lbs each.
+        Long-term: evaluate Smith machine at Planet Fitness for heavier loading.
+
+    overhead_press:
+      equipment: barbell
+      current_load: "20 lbs barbell"
+      rep_range: 8–10
+      sets: 3
+      increment: "5 lbs"
+      notes: >
+        At home gym. Verify this is loaded barbell (not just the bar).
+        Standard barbell is 45 lbs — if current is just bar + plates clarify.
+        When 10 reps at RPE ≤ 7, increase to 25 lbs.
+
+    dumbbell_row:
+      equipment: home_dumbbells
+      current_load: "20 lbs each side"
+      rep_range: 10–12
+      sets: 3
+      increment: "5 lbs"
+      notes: >
+        Unilateral. Progress each side independently if strength asymmetry
+        develops. When 12 reps at RPE ≤ 7, increase to 25 lbs.
+
+    goblet_squat:
+      equipment: home_dumbbells
+      current_load: "25 lb dumbbell"
+      rep_range: 10–12
+      sets: 3
+      increment: "5 lbs"
+      notes: >
+        When 12 reps at RPE ≤ 7, increase to 30 lbs. At home gym.
+        On Planet Fitness Tuesdays, can substitute barbell back squat or
+        Smith machine squat when ready for heavier loading.
+
+    lat_pulldown:
+      equipment: planet_fitness_cable
+      current_load: "60 lbs"
+      rep_range: 10–12
+      sets: 3
+      increment: "5 lbs"
+      notes: >
+        Planet Fitness only (Tuesdays). When 12 reps at RPE ≤ 7, increase to 65 lbs.
+        On home gym days: substitute dumbbell row or bodyweight pull-up progressions.
+
+# ─── RUNNING PROGRESSION ─────────────────────────────────────────────────────
+
+running:
+  current_baseline:
+    duration_minutes: 20
+    pace_mph: 5.2–5.5
+    peak_hr_bpm: 188–200
+    notes: "Can sustain 20+ min. Building toward longer sustained efforts at 5.5 mph."
+
+  goal: "Extend sustained duration at 5.5 mph. Pace is secondary once duration is established."
+
+  progression_model:
+    primary_variable: duration
+    target_pace: 5.5
+    pace_lock: >
+      Do not increase pace and duration in the same session or same week.
+      Pace target is 5.5 mph — hold this while extending duration.
+
+  duration_rules:
+    - condition: previous_session_rpe <= 7 AND cycle_phase IN [follicular, ovulatory]
+      action: add 2–3 minutes to next session
+    - condition: previous_session_rpe == 8
+      action: hold same duration, same pace
+    - condition: previous_session_rpe >= 9
+      action: reduce duration 5 minutes; do not reduce pace
+    - condition: cycle_phase IN [late_luteal, menstrual]
+      action: hold duration (no extension this phase); maintain 5.5 mph if readiness allows
+
+  hr_guidance:
+    max_observed_bpm: 200
+    zone_4_threshold_bpm: 160  # 80% of 200
+    zone_5_threshold_bpm: 180  # 90% of 200
+    notes: >
+      Running at 5.5 mph currently hits zone 4–5 (HR 188–200). This is
+      appropriate for building aerobic capacity but is high-intensity work —
+      factor this into weekly load accounting. Don't stack high-intensity
+      running on top of high-intensity strength days.
+
+  weekly_structure:
+    max_hard_running_days: 2
+    recovery_run_option: "30–40 min walk or elliptical at zone 2 (HR 120–140)"
+    notes: >
+      On deload weeks, reduce run duration 40%, maintain pace.
+
+  citation_key: gabbett_2016_acute_chronic
+
+# ─── EQUIPMENT-DAY MAPPING ───────────────────────────────────────────────────
+
+equipment_days:
+  tuesday:
+    location: Planet Fitness
+    available: [smith_machine, cables, barbells, full_dumbbell_rack, lat_pulldown, machines]
+    preferred_focus: >
+      Use Tuesday for exercises that benefit from heavier barbell or cable work:
+      lat pulldown, cable rows, barbell squats, Smith machine hip thrusts.
+  other_days:
+    location: Home gym
+    available: [pull_up_bar, dumbbells, treadmill, elliptical, machines]
+    preferred_focus: >
+      Dumbbell strength circuits, treadmill running, elliptical cardio.
+      Pull-up bar for bodyweight pulling progressions.

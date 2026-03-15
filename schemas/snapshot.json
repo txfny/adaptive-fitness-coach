@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "snapshot.json",
+  "title": "Daily Snapshot",
+  "description": "The structured daily input object collected before each session. All downstream agents consume this — do not interpret data in this layer, only collect and validate.",
+  "type": "object",
+  "required": ["date", "hrv_ms", "rhr_bpm", "rhr_7day_avg", "sleep_hours", "cycle_day", "equipment_available"],
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Session date in YYYY-MM-DD format."
+    },
+    "hrv_ms": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Heart rate variability in milliseconds, from Apple Health or wearable. Use the overnight/morning reading, not a spot check. If Apple Health and wearable conflict, Apple Health reading wins."
+    },
+    "rhr_bpm": {
+      "type": "number",
+      "minimum": 30,
+      "maximum": 120,
+      "description": "Resting heart rate in beats per minute, from Apple Health morning reading."
+    },
+    "rhr_7day_avg": {
+      "type": "number",
+      "minimum": 30,
+      "maximum": 120,
+      "description": "7-day rolling average resting heart rate. Used to compute rhr_delta. Pulled from Apple Health weekly average."
+    },
+    "rhr_delta": {
+      "type": "number",
+      "description": "Computed field: rhr_bpm minus rhr_7day_avg. Positive = elevated above baseline. Populated automatically — do not ask user for this."
+    },
+    "sleep_hours": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 14,
+      "description": "Total sleep time in hours from last night, from Apple Health."
+    },
+    "sleep_quality": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "Subjective sleep quality rating. 1 = very poor, 5 = excellent. Optional — if not provided, sleep_hours is the primary signal."
+    },
+    "cycle_day": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 35,
+      "description": "Current day of menstrual cycle. Day 1 = first day of period. Used to determine cycle phase in cycle-phase.yaml."
+    },
+    "subjective_energy": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "description": "How does the user feel right now, energy-wise? 1 = exhausted, 10 = excellent. This can override or flag conflicts with objective signals — a HIGH HRV with energy 2/10 should trigger a MODERATE readiness flag."
+    },
+    "equipment_available": {
+      "type": "string",
+      "enum": ["home_gym", "planet_fitness", "home_gym_treadmill_only", "bodyweight_only", "outdoor_only"],
+      "description": "What equipment is accessible today. Defaults to home_gym on non-Tuesday days and planet_fitness on Tuesdays — confirm if different."
+    },
+    "soreness": {
+      "type": "object",
+      "description": "Optional muscle group soreness map. Informs exercise selection to avoid stacking load on acutely sore tissue.",
+      "properties": {
+        "lower_body": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3,
+          "description": "0 = none, 1 = mild, 2 = moderate, 3 = significant"
+        },
+        "upper_body": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "core": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Freetext. Anything else relevant — sick, stressed, unusual schedule, medication changes, travel. This is read by the Plan Agent for context."
+    }
+  }
+}

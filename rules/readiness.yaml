@@ -1,0 +1,114 @@
+# Readiness Scoring Rules
+# Inputs: hrv_ms, rhr_delta (current RHR minus 7-day average), sleep_hours
+# Output: readiness tier — LOW | MODERATE | HIGH
+#
+# Conflict resolution: if inputs map to different tiers, the LOWEST tier wins.
+# This system is conservative by default. Erring toward recovery is cheaper
+# than erring toward overtraining.
+
+conflict_resolution: lowest_signal_wins
+
+tiers:
+  LOW:
+    label: "Recovery Only"
+    description: >
+      One or more signals indicate significant physiological stress or under-recovery.
+      Prescribe only active recovery: walking, gentle mobility, breathing work, or rest.
+      No structured strength or conditioning work.
+    triggers:
+      # Any single trigger is sufficient to produce a LOW readiness score.
+      - condition: hrv_ms < 35
+        justification:
+          citation_key: plews_2013_hrv
+          rationale: >
+            HRV below 35ms indicates suppressed parasympathetic tone consistent
+            with incomplete recovery from prior stress load. Training through
+            this window increases injury risk and impairs adaptation.
+      - condition: rhr_delta > 8
+        justification:
+          citation_key: hynynen_2006_rhr
+          rationale: >
+            An RHR elevation greater than 8bpm above the 7-day rolling average
+            is a reliable marker of autonomic dysregulation and accumulated
+            fatigue. This level of elevation warrants a recovery day.
+      - condition: sleep_hours < 5
+        justification:
+          citation_key: watson_2017_sleep
+          rationale: >
+            Fewer than 5 hours of sleep produces measurable decrements in
+            reaction time, power output, and decision-making. Training on
+            insufficient sleep also elevates cortisol and suppresses
+            anabolic hormone response.
+
+  MODERATE:
+    label: "Reduced Volume"
+    description: >
+      Signals indicate partial recovery — not optimal, but not a clear stop sign.
+      Reduce total volume 20-30% from the planned prescription. Cap intensity:
+      no maximal efforts, no PRs, no HIIT. RPE ceiling of 7. Technique work
+      and submaximal strength are appropriate.
+    triggers:
+      # All three conditions must fall within their MODERATE ranges simultaneously.
+      - condition: hrv_ms >= 35 AND hrv_ms <= 55
+        justification:
+          citation_key: plews_2013_hrv
+          rationale: >
+            HRV in the 35–55ms range indicates partial parasympathetic recovery.
+            Training is appropriate but adaptation is not optimized. Volume
+            reduction protects against tipping into overreaching.
+      - condition: rhr_delta >= 3 AND rhr_delta <= 8
+        justification:
+          citation_key: hynynen_2006_rhr
+          rationale: >
+            A 3–8bpm RHR elevation above baseline indicates elevated sympathetic
+            tone without full alarm-state suppression. Moderate work is tolerable;
+            maximal efforts are contraindicated.
+      - condition: sleep_hours >= 5 AND sleep_hours <= 7
+        justification:
+          citation_key: watson_2017_sleep
+          rationale: >
+            5–7 hours of sleep represents suboptimal but functional recovery.
+            Physical performance is mildly impaired; training proceeds with
+            reduced volume and intensity expectations.
+    volume_adjustment: "reduce 20–30% from prescribed"
+    intensity_cap: "RPE 7 maximum; no maximal efforts"
+
+  HIGH:
+    label: "Full Programming"
+    description: >
+      All signals indicate good recovery. Full prescribed volume and intensity
+      are appropriate. PRs, new exercises, and high-intensity work are all
+      on the table, subject to cycle phase ceiling.
+    triggers:
+      # All three conditions must be met simultaneously.
+      - condition: hrv_ms > 55
+        justification:
+          citation_key: plews_2013_hrv
+          rationale: >
+            HRV above 55ms indicates robust parasympathetic dominance and
+            high readiness for adaptation. This is the optimal training window.
+      - condition: rhr_delta < 3
+        justification:
+          citation_key: hynynen_2006_rhr
+          rationale: >
+            RHR within 3bpm of the 7-day average indicates stable autonomic
+            baseline — the athlete has recovered from prior load.
+      - condition: sleep_hours > 7
+        justification:
+          citation_key: watson_2017_sleep
+          rationale: >
+            More than 7 hours of sleep supports full hormonal recovery, memory
+            consolidation of motor patterns, and anabolic hormone optimization.
+
+# Edge case handling
+notes:
+  - >
+    If only two of the three MODERATE conditions are met, and the third is a
+    HIGH signal, apply MODERATE (conservative default).
+  - >
+    If subjective_energy is provided in the snapshot and diverges strongly from
+    objective signals (e.g., HRV is HIGH but energy is 2/10), flag the
+    discrepancy in readiness_reasoning and consider applying MODERATE.
+  - >
+    Readiness tier is computed before cycle phase is applied. The final
+    intensity ceiling is: min(readiness_ceiling, cycle_phase_ceiling).

@@ -1,0 +1,157 @@
+# Research Citation Index
+# Each entry maps a citation_key to its source and the specific finding
+# that justifies a rule in this system.
+#
+# NOTE: DOIs and journal details have been included where confidently known.
+# Any entry marked verify: true should be confirmed before treating as authoritative.
+# Do not hallucinate DOIs — if uncertain, the entry notes this explicitly.
+
+citations:
+
+  plews_2013_hrv:
+    key: plews_2013_hrv
+    authors: "Plews DJ, Laursen PB, Stanley J, Kilding AE, Buchheit M"
+    year: 2013
+    title: "Training Adaptation and Heart Rate Variability in Elite Endurance Athletes: Opening the Door to Effective Monitoring"
+    journal: "Sports Medicine"
+    volume: 43
+    issue: 9
+    pages: 773–784
+    doi: "10.1007/s40279-013-0071-8"
+    finding_summary: >
+      HRV-guided training (adjusting session intensity based on daily HRV readings)
+      produces superior adaptation outcomes compared to fixed periodization in
+      endurance athletes. Suppressed HRV indicates incomplete recovery; training
+      through it increases injury risk and delays supercompensation.
+    used_in_rules: [readiness.yaml — LOW and MODERATE and HIGH tiers]
+    verify: false
+
+  hynynen_2006_rhr:
+    key: hynynen_2006_rhr
+    authors: "Hynynen E, Uusitalo A, Konttinen N, Rusko H"
+    year: 2006
+    title: "Heart rate variability during night sleep and after awakening in overtrained athletes"
+    journal: "Medicine & Science in Sports & Exercise"
+    volume: 38
+    issue: 2
+    pages: 313–317
+    doi: "10.1249/01.mss.0000184631.27641.b5"
+    finding_summary: >
+      Elevated resting heart rate and suppressed HRV during sleep are reliable
+      markers of autonomic dysregulation and accumulated fatigue in trained athletes.
+      RHR elevation > 5–8bpm above rolling baseline correlates with overreaching.
+    used_in_rules: [readiness.yaml — rhr_delta triggers]
+    verify: false
+
+  watson_2017_sleep:
+    key: watson_2017_sleep
+    authors: "Watson NF, Badr MS, Belenky G, et al."
+    year: 2015
+    title: "Recommended Amount of Sleep for a Healthy Adult: A Joint Consensus Statement of the American Academy of Sleep Medicine and Sleep Research Society"
+    journal: "Sleep"
+    volume: 38
+    issue: 6
+    pages: 843–844
+    doi: "10.5665/sleep.4716"
+    finding_summary: >
+      Adults require 7+ hours of sleep per night for optimal health. Sleep below
+      6 hours produces significant decrements in cognitive performance, reaction time,
+      and physical recovery. Athletes in sleep-restricted states show elevated cortisol,
+      reduced anabolic hormone response, and impaired motor learning consolidation.
+    used_in_rules: [readiness.yaml — sleep_hours triggers]
+    verify: false
+    note: "Cited as watson_2017 in system but actual publication year is 2015."
+
+  mcnulty_2020_cycle:
+    key: mcnulty_2020_cycle
+    authors: "McNulty KL, Elliott-Sale KJ, Dolan E, Swinton PA, Ansdell P, Goodall S, Thomas K, Hicks KM"
+    year: 2020
+    title: "The Effects of Menstrual Cycle Phase on Exercise Performance in Eumenorrheic Women: A Systematic Review and Meta-Analysis"
+    journal: "Sports Medicine"
+    volume: 50
+    issue: 10
+    pages: 1813–1827
+    doi: "10.1007/s40279-020-01319-3"
+    finding_summary: >
+      Systematic review of 78 studies found small but meaningful performance
+      decrements during the early follicular (menstrual) phase vs. mid-follicular
+      and ovulatory phases. Strength and endurance performance tends to peak
+      in follicular and ovulatory phases. Luteal phase effects are highly
+      individual — population-level data shows modest decrements but inter-individual
+      variation is large, supporting individualized tracking over generic rules.
+    used_in_rules: [cycle-phase.yaml — all phases]
+    verify: false
+
+  schoenfeld_2016_frequency:
+    key: schoenfeld_2016_frequency
+    authors: "Schoenfeld BJ, Ogborn D, Krieger JW"
+    year: 2016
+    title: "Effects of Resistance Training Frequency on Measures of Muscle Hypertrophy: A Systematic Review and Meta-Analysis"
+    journal: "Sports Medicine"
+    volume: 46
+    issue: 11
+    pages: 1689–1697
+    doi: "10.1007/s40279-016-0543-8"
+    finding_summary: >
+      Training each muscle group at least twice per week produces significantly
+      greater hypertrophy than once-per-week frequency when volume is equated.
+      Supports the 48-hour minimum recovery window between same-muscle sessions
+      and the use of full-body or upper/lower splits over bro splits for
+      hypertrophy-focused training.
+    used_in_rules: [progression.yaml — session structure notes]
+    verify: false
+
+  zourdos_2016_rpe:
+    key: zourdos_2016_rpe
+    authors: "Zourdos MC, Klemp A, Dolan C, Quiles JM, Schau KA, Jo E, Helms E, Esgro B, Duncan S, Garcia Merino S, Blanco R"
+    year: 2016
+    title: "Novel Resistance Training–Specific Rating of Perceived Exertion Scale Measuring Repetitions in Reserve"
+    journal: "Journal of Strength and Conditioning Research"
+    volume: 30
+    issue: 1
+    pages: 267–275
+    doi: "10.1519/JSC.0000000000001049"
+    finding_summary: >
+      Introduces and validates the Repetitions in Reserve (RIR)-based RPE scale
+      for resistance training (RPE 10 = 0 reps left, RPE 7 = ~3 reps left).
+      RPE-based autoregulation outperforms fixed-percentage programming in
+      managing daily readiness variation, particularly across menstrual cycle phases
+      where strength capacity fluctuates.
+    used_in_rules: [progression.yaml — rpe_rules for all exercises]
+    verify: false
+
+  gabbett_2016_acute_chronic:
+    key: gabbett_2016_acute_chronic
+    authors: "Gabbett TJ"
+    year: 2016
+    title: "The training-injury prevention paradox: should athletes be training smarter and harder?"
+    journal: "British Journal of Sports Medicine"
+    volume: 50
+    issue: 5
+    pages: 273–280
+    doi: "10.1136/bjsports-2015-095788"
+    finding_summary: >
+      The acute:chronic workload ratio (current week load vs. rolling 4-week average)
+      is a strong predictor of injury risk. Spikes above 1.5x the chronic workload
+      significantly elevate injury probability. Supports the 10% weekly volume
+      increase cap and auto-deload triggers in this system.
+    used_in_rules: [progression.yaml — global rules, running progression]
+    verify: false
+
+  helms_2016_rpe:
+    key: helms_2016_rpe
+    authors: "Helms ER, Cronin J, Storey A, Zourdos MC"
+    year: 2016
+    title: "Application of the Repetitions in Reserve-Based Rating of Perceived Exertion Scale for Resistance Training"
+    journal: "Strength and Conditioning Journal"
+    volume: 38
+    issue: 4
+    pages: 42–49
+    doi: "10.1519/SSC.0000000000000218"
+    finding_summary: >
+      Practical framework for applying RIR-based RPE in resistance training
+      programming. Demonstrates that trained athletes can accurately estimate
+      RIR, making RPE-based autoregulation a valid and reliable tool for
+      managing load across variable recovery states.
+    used_in_rules: [progression.yaml — rpe_rules, SKILL.md — push-back language]
+    verify: false

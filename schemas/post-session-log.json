@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "post-session-log.json",
+  "title": "Post-Session Log",
+  "description": "Feedback collected after the workout. This is the most valuable signal in the system — prescribed vs. actual divergence is how the rules engine calibrates over time.",
+  "type": "object",
+  "required": ["date", "session_plan_ref", "overall_rpe", "prediction_accuracy"],
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "session_plan_ref": {
+      "type": "string",
+      "description": "Filename of the session plan this log corresponds to. e.g., '2026-03-14-session-plan.json'"
+    },
+    "actual_exercises": {
+      "type": "array",
+      "description": "What actually happened. Same structure as session-plan exercises but with actual numbers. Omit exercises that were skipped and note why.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "sets_completed": { "type": "integer" },
+          "reps_completed": { "type": "string", "description": "Actual reps, e.g. '10, 10, 9' for three sets" },
+          "load_used": { "type": "string" },
+          "actual_rpe": { "type": "integer", "minimum": 1, "maximum": 10 },
+          "notes": { "type": "string", "description": "Anything notable — form breakdown, easier than expected, had to stop early, etc." }
+        }
+      }
+    },
+    "overall_rpe": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "description": "How hard did the session feel overall? 1 = barely moved, 10 = maximum effort, nothing left."
+    },
+    "energy_after": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5,
+      "description": "How do you feel post-session? 1 = depleted/wiped, 5 = energized. Consistently scoring 1–2 suggests over-programming."
+    },
+    "prediction_accuracy": {
+      "type": "string",
+      "enum": ["accurate", "over_estimated", "under_estimated"],
+      "description": "Did the readiness assessment match how the session actually felt? Over-estimated = system thought you were more ready than you were. Under-estimated = system was too conservative."
+    },
+    "prediction_accuracy_notes": {
+      "type": "string",
+      "description": "Optional detail on why the prediction was off. e.g., 'HRV said HIGH but legs were toast from yesterday's run.'"
+    },
+    "running_data": {
+      "type": "object",
+      "description": "For sessions including treadmill work.",
+      "properties": {
+        "duration_minutes": { "type": "number" },
+        "pace_mph": { "type": "number" },
+        "peak_hr_bpm": { "type": "integer" },
+        "avg_hr_bpm": { "type": "integer" },
+        "rpe": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "notes": { "type": "string" }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Anything else. How you're feeling, what felt good, what to adjust."
+    },
+    "flag_for_rule_review": {
+      "type": "boolean",
+      "default": false,
+      "description": "Set to true if this session produced a result that seems to contradict a system rule. Triggers a review prompt next session."
+    },
+    "flag_reason": {
+      "type": "string",
+      "description": "If flag_for_rule_review is true, explain what happened and which rule may need adjustment."
+    }
+  }
+}

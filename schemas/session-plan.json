@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "session-plan.json",
+  "title": "Session Plan",
+  "description": "The structured output of the Plan Agent. This is what gets delivered to the user as their workout. Every field that represents a decision must include reasoning.",
+  "type": "object",
+  "required": ["date", "readiness_score", "readiness_reasoning", "cycle_phase", "workout_type", "exercises", "focus_cue", "estimated_duration_minutes"],
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "readiness_score": {
+      "type": "string",
+      "enum": ["LOW", "MODERATE", "HIGH"],
+      "description": "Output of the Readiness Agent after running snapshot against readiness.yaml."
+    },
+    "readiness_reasoning": {
+      "type": "array",
+      "description": "Which specific rules fired to produce this readiness score. Each item is one rule trigger.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "signal": { "type": "string", "description": "e.g., hrv_ms, rhr_delta, sleep_hours" },
+          "value": { "type": "number" },
+          "rule_triggered": { "type": "string" },
+          "tier_assigned": { "type": "string", "enum": ["LOW", "MODERATE", "HIGH"] }
+        }
+      }
+    },
+    "cycle_phase": {
+      "type": "string",
+      "enum": ["menstrual", "follicular", "ovulatory", "early_luteal", "late_luteal"],
+      "description": "Current cycle phase from cycle-phase.yaml."
+    },
+    "effective_intensity_ceiling": {
+      "type": "string",
+      "enum": ["LOW", "MODERATE", "HIGH"],
+      "description": "Final ceiling = min(readiness_ceiling, cycle_phase_ceiling). This is what constrains the plan."
+    },
+    "workout_type": {
+      "type": "string",
+      "enum": ["strength", "cardio", "strength_and_cardio", "recovery", "mobility"],
+      "description": "Primary modality for this session."
+    },
+    "exercises": {
+      "type": "array",
+      "description": "Ordered list of exercises. Follow this sequence.",
+      "items": {
+        "type": "object",
+        "required": ["name", "sets", "notes"],
+        "properties": {
+          "name": { "type": "string" },
+          "sets": { "type": "integer" },
+          "reps": {
+            "type": "string",
+            "description": "Rep target or range, e.g. '8–12' or '10'. Use string to allow ranges."
+          },
+          "load": {
+            "type": "string",
+            "description": "Weight or pace. e.g., '25 lbs each', '5.5 mph', 'bodyweight'. Null for mobility/recovery work."
+          },
+          "rest_seconds": {
+            "type": "integer",
+            "description": "Rest between sets in seconds."
+          },
+          "rpe_target": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10,
+            "description": "Target RPE for this exercise. Used by user to self-regulate."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Form cues, substitution options, or context."
+          }
+        }
+      }
+    },
+    "focus_cue": {
+      "type": "string",
+      "description": "One sentence intention for the session. Not motivational fluff — a specific technical or effort cue."
+    },
+    "estimated_duration_minutes": {
+      "type": "integer",
+      "description": "Realistic time estimate including warm-up and rest periods."
+    },
+    "progression_note": {
+      "type": "string",
+      "description": "What changed from the last session and why. If nothing changed, say so. This is the system showing its work."
+    },
+    "overrides_applied": {
+      "type": "array",
+      "description": "Any user-requested deviations from the rules-based prescription. Logged here so the feedback loop accounts for them.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rule_overridden": { "type": "string" },
+          "user_preference": { "type": "string" },
+          "system_recommendation": { "type": "string" },
+          "citation_offered": { "type": "string" }
+        }
+      }
+    }
+  }
+}
