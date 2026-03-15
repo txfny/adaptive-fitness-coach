@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { SliderInput } from "@/components/slider-input";
 import { Heart, Target, Pulse, Pen, Sparkle } from "@/components/line-art";
+import { supabase } from "@/lib/supabase";
 
 export default function LogPage() {
   const [rpe, setRpe] = useState(7);
@@ -12,6 +13,7 @@ export default function LogPage() {
   const [hr1Min, setHr1Min] = useState(120);
   const [notes, setNotes] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [saving, setSaving] = useState(false);
 
   const hrrDelta = hrStop - hr1Min;
   const hrrAssessment = hrrDelta >= 20 ? "good" : hrrDelta >= 12 ? "watch" : "flag";
@@ -26,7 +28,20 @@ export default function LogPage() {
     flag: "bg-rose-soft/[0.06] border-rose-soft/15",
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setSaving(true);
+    await supabase.from("logs").insert({
+      date: new Date().toISOString().split("T")[0],
+      overall_rpe: rpe,
+      energy_after: energyAfter,
+      prediction_accuracy: prediction,
+      hr_at_stop: hrStop,
+      hr_1min_recovery: hr1Min,
+      hrr_delta: hrrDelta,
+      hrr_assessment: hrrAssessment,
+      notes: notes || null,
+    });
+    setSaving(false);
     setSubmitted(true);
   };
 
@@ -207,7 +222,7 @@ export default function LogPage() {
         onClick={handleSubmit}
         className="w-full py-4 rounded-2xl bg-sage text-white font-semibold text-sm hover:bg-sage-dark transition-all duration-200"
       >
-        Record Your Wins
+        {saving ? "Saving..." : "Record Your Wins"}
       </button>
     </div>
   );

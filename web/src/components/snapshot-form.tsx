@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Snapshot, ReadinessResult } from "@/lib/types";
 import { computeReadiness, DEFAULT_BASELINE } from "@/lib/readiness";
+import { supabase } from "@/lib/supabase";
 import { SliderInput } from "./slider-input";
 import { SeverityPicker } from "./severity-picker";
 import { ReadinessGauge } from "./readiness-gauge";
@@ -31,11 +32,12 @@ export function SnapshotForm() {
   const [sorenessCore, setSorenessCore] = useState(0);
 
   const [notes, setNotes] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const symptomLoad = bloating + gi + cramps + fatigue;
   const pillPhase = pillDay <= 21 ? "active" : "placebo";
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const snapshot: Snapshot = {
       date: new Date().toISOString().split("T")[0],
       hrv_ms: hrv,
@@ -54,6 +56,31 @@ export function SnapshotForm() {
       notes: notes || undefined,
     };
     const result = computeReadiness(snapshot);
+
+    // Save to Supabase
+    setSaving(true);
+    await supabase.from("snapshots").insert({
+      date: snapshot.date,
+      hrv_ms: snapshot.hrv_ms,
+      rhr_bpm: snapshot.rhr_bpm,
+      rhr_7day_avg: snapshot.rhr_7day_avg,
+      rhr_delta: snapshot.rhr_delta,
+      sleep_hours: snapshot.sleep_hours,
+      subjective_energy: snapshot.subjective_energy,
+      pill_pack_day: snapshot.pill_pack_day,
+      pill_phase: snapshot.pill_phase,
+      symptoms: snapshot.symptoms,
+      symptom_load: snapshot.symptom_load,
+      mood: snapshot.mood,
+      equipment_available: snapshot.equipment_available,
+      soreness: snapshot.soreness,
+      notes: snapshot.notes,
+      readiness_tier: result.tier,
+      readiness_reasoning: result.reasoning,
+      readiness_summary: result.summary,
+    });
+    setSaving(false);
+
     setReadinessResult(result);
     setSubmitted(true);
   };
@@ -250,7 +277,7 @@ export function SnapshotForm() {
         onClick={handleSubmit}
         className="w-full py-4 rounded-2xl bg-sage text-white font-semibold text-sm hover:bg-sage-dark transition-all duration-200"
       >
-        Check in with your body
+        {saving ? "Saving..." : "Check in with your body"}
       </button>
     </div>
   );

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { BottomNav } from "@/components/bottom-nav";
+import { PinGate } from "@/components/pin-gate";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -41,10 +42,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-cream-100 text-cream-900 min-h-screen`}
       >
-        <main className="max-w-5xl mx-auto px-5 lg:px-8 pt-[env(safe-area-inset-top)] pb-28 lg:pb-8">
-          {children}
-        </main>
-        <BottomNav />
+        <PinGate>
+          <main className="max-w-5xl mx-auto px-5 lg:px-8 pt-[env(safe-area-inset-top)] pb-28 lg:pb-8">
+            {children}
+          </main>
+          <BottomNav />
+        </PinGate>
       </body>
     </html>
   );
