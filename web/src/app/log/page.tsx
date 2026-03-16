@@ -1,11 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SliderInput } from "@/components/slider-input";
+import { ExerciseLogRow } from "@/components/exercise-log-row";
 import { Heart, Target, Pulse, Pen, Sparkle } from "@/components/line-art";
 import { supabase } from "@/lib/supabase";
+import { getTodaySession, saveExerciseHistory } from "@/lib/session-history";
+import type { ExerciseLogEntry } from "@/lib/types";
 
 export default function LogPage() {
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [exercises, setExercises] = useState<ExerciseLogEntry[]>([]);
+  const [loadingSession, setLoadingSession] = useState(true);
+
   const [rpe, setRpe] = useState(7);
   const [energyAfter, setEnergyAfter] = useState(3);
   const [prediction, setPrediction] = useState<string>("accurate");
@@ -28,24 +35,70 @@ export default function LogPage() {
     flag: "bg-rose-soft/[0.06] border-rose-soft/15",
   };
 
+  // Load today's session and pre-fill exercises
+  useEffect(() => {
+    (async () => {
+      const session = await getTodaySession();
+      if (session) {
+        setSessionId(session.id);
+        const prefilled: ExerciseLogEntry[] = (session.exercises || []).map((ex) => ({
+          exercise_name: ex.name,
+          target_area: undefined,
+          prescribed_sets: ex.sets,
+          prescribed_reps: ex.reps,
+          prescribed_load: ex.load,
+          prescribed_rpe: ex.rpe,
+          sets_completed: ex.sets,
+          reps_completed: ex.reps || "",
+          load_used: ex.load || "BW",
+          actual_rpe: ex.rpe,
+          skipped: false,
+        }));
+        setExercises(prefilled);
+      }
+      setLoadingSession(false);
+    })();
+  }, []);
+
+  const updateExercise = (index: number, updated: ExerciseLogEntry) => {
+    setExercises((prev) => prev.map((e, i) => (i === index ? updated : e)));
+  };
+
   const handleSubmit = async () => {
     setSaving(true);
-    await supabase.from("logs").insert({
-      date: new Date().toISOString().split("T")[0],
-      overall_rpe: rpe,
-      energy_after: energyAfter,
-      prediction_accuracy: prediction,
-      hr_at_stop: hrStop,
-      hr_1min_recovery: hr1Min,
-      hrr_delta: hrrDelta,
-      hrr_assessment: hrrAssessment,
-      notes: notes || null,
-    });
+    const today = new Date().toISOString().split("T")[0];
+
+    // 1. Insert log, get back the ID
+    const { data: logData } = await supabase
+      .from("logs")
+      .insert({
+        date: today,
+        session_id: sessionId,
+        overall_rpe: rpe,
+        energy_after: energyAfter,
+        prediction_accuracy: prediction,
+        hr_at_stop: hrStop,
+        hr_1min_recovery: hr1Min,
+        hrr_delta: hrrDelta,
+        hrr_assessment: hrrAssessment,
+        notes: notes || null,
+      })
+      .select("id")
+      .single();
+
+    // 2. Insert exercise history rows
+    if (logData?.id && exercises.length > 0) {
+      await saveExerciseHistory(logData.id, sessionId, today, exercises);
+    }
+
     setSaving(false);
     setSubmitted(true);
   };
 
   if (submitted) {
+    const logged = exercises.filter((e) => !e.skipped);
+    const skipped = exercises.filter((e) => e.skipped);
+
     return (
       <div className="py-8 space-y-6 max-w-2xl mx-auto lg:pl-16">
         <div className="bg-white border border-cream-300/50 rounded-2xl p-6 text-center card-soft">
@@ -54,6 +107,32 @@ export default function LogPage() {
           </div>
           <h2 className="text-xl font-semibold text-cream-900 mb-1">You crushed it!</h2>
           <p className="text-sm text-cream-600 font-light mb-5">Session logged. Your future self thanks you.</p>
+
+          {/* Exercise summary */}
+          {logged.length > 0 && (
+            <div className="space-y-1.5 mb-4 text-left">
+              <p className="text-[10px] text-cream-500 uppercase tracking-widest font-medium px-1">
+                Exercises logged
+              </p>
+              {logged.map((ex, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-between bg-cream-100/80 rounded-xl px-4 py-2"
+                >
+                  <span className="text-sm text-cream-700 font-light">{ex.exercise_name}</span>
+                  <span className="font-mono text-xs text-cream-600">
+                    {ex.sets_completed} × {ex.reps_completed} @ {ex.load_used}
+                  </span>
+                </div>
+              ))}
+              {skipped.length > 0 && (
+                <p className="text-[11px] text-cream-400 font-light px-1 mt-1">
+                  {skipped.length} skipped: {skipped.map((e) => e.exercise_name).join(", ")}
+                </p>
+              )}
+            </div>
+          )}
+
           <div className="space-y-2">
             {[
               { label: "RPE", value: `${rpe}/10`, icon: <FlexArmSmall /> },
@@ -100,9 +179,38 @@ export default function LogPage() {
       <div className="flex gap-3 items-start rounded-2xl bg-sage/[0.05] border border-sage/12 p-4">
         <Sparkle size={18} color="#7BAE7F" className="flex-shrink-0 mt-0.5" />
         <p className="text-[13px] text-cream-700 font-light leading-relaxed">
-          Log within an hour of finishing. RPE and prediction accuracy are the most important — they calibrate your future sessions.
+          Exercises are pre-filled from your plan. Confirm or edit what you actually did — then log overall feel below.
         </p>
       </div>
+
+      {/* Exercises */}
+      {loadingSession ? (
+        <div className="space-y-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="animate-pulse bg-cream-100 rounded-2xl h-24" />
+          ))}
+        </div>
+      ) : exercises.length > 0 ? (
+        <div className="space-y-3">
+          <div className="flex items-center gap-2">
+            <DumbbellSmall />
+            <h3 className="text-xs font-medium text-cream-700 uppercase tracking-widest">Exercises</h3>
+          </div>
+          {exercises.map((entry, i) => (
+            <ExerciseLogRow
+              key={i}
+              entry={entry}
+              onChange={(updated) => updateExercise(i, updated)}
+            />
+          ))}
+        </div>
+      ) : (
+        <div className="rounded-2xl bg-cream-100/60 border border-cream-300/40 p-4 text-center">
+          <p className="text-sm text-cream-500 font-light">
+            No session plan found for today. Log your overall feel below.
+          </p>
+        </div>
+      )}
 
       {/* Overall */}
       <div className="space-y-5">
@@ -225,6 +333,14 @@ export default function LogPage() {
         {saving ? "Saving..." : "Record Your Wins"}
       </button>
     </div>
+  );
+}
+
+function DumbbellSmall() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 48 48" fill="none">
+      <path d="M8 24h32M12 18v12M36 18v12M8 20v8M40 20v8" stroke="#C08B6F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
   );
 }
 

@@ -82,3 +82,44 @@ export async function saveSession(session: Omit<SessionRecord, "id"> & { id?: st
   if (error) console.error("Failed to save session:", error);
   return data;
 }
+
+export async function saveExerciseHistory(
+  logId: string,
+  sessionId: string | null,
+  date: string,
+  exercises: {
+    exercise_name: string;
+    target_area?: string;
+    prescribed_sets: number;
+    prescribed_reps?: string;
+    prescribed_load?: string;
+    prescribed_rpe?: number;
+    sets_completed: number;
+    reps_completed: string;
+    load_used: string;
+    actual_rpe?: number;
+    skipped: boolean;
+    notes?: string;
+  }[]
+) {
+  const rows = exercises.map((ex) => ({
+    log_id: logId,
+    session_id: sessionId,
+    date,
+    exercise_name: ex.exercise_name,
+    target_area: ex.target_area || null,
+    prescribed_sets: ex.prescribed_sets,
+    prescribed_reps: ex.prescribed_reps || null,
+    prescribed_load: ex.prescribed_load || null,
+    prescribed_rpe: ex.prescribed_rpe || null,
+    sets_completed: ex.sets_completed,
+    reps_completed: ex.reps_completed,
+    load_used: ex.load_used,
+    actual_rpe: ex.actual_rpe || null,
+    skipped: ex.skipped,
+    notes: ex.notes || null,
+  }));
+
+  const { error } = await supabase.from("exercise_history").insert(rows);
+  if (error) console.error("Failed to save exercise history:", error);
+}

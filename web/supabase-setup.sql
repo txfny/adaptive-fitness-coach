@@ -66,3 +66,31 @@ alter table sessions enable row level security;
 
 create policy "Allow all access to sessions" on sessions
   for all using (true) with check (true);
+
+-- Link logs to their session plan
+alter table logs add column if not exists session_id uuid references sessions(id);
+
+-- Per-exercise logging
+create table if not exists exercise_history (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamptz default now(),
+  log_id uuid references logs(id) on delete cascade,
+  session_id uuid references sessions(id),
+  date date not null,
+  exercise_name text not null,
+  target_area text,
+  prescribed_sets integer,
+  prescribed_reps text,
+  prescribed_load text,
+  prescribed_rpe integer,
+  sets_completed integer not null,
+  reps_completed text not null,
+  load_used text not null,
+  actual_rpe integer,
+  skipped boolean default false,
+  notes text
+);
+
+alter table exercise_history enable row level security;
+create policy "Allow all access to exercise_history" on exercise_history
+  for all using (true) with check (true);

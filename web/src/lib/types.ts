@@ -96,6 +96,21 @@ export interface ExerciseLog {
   notes?: string;
 }
 
+export interface ExerciseLogEntry {
+  exercise_name: string;
+  target_area?: string;
+  prescribed_sets: number;
+  prescribed_reps?: string;
+  prescribed_load?: string;
+  prescribed_rpe?: number;
+  sets_completed: number;
+  reps_completed: string;
+  load_used: string;
+  actual_rpe?: number;
+  skipped: boolean;
+  notes?: string;
+}
+
 export interface PostWorkoutBiometrics {
   hr_at_stop_bpm?: number;
   hr_1min_recovery_bpm?: number;
