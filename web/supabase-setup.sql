@@ -38,6 +38,20 @@ create table if not exists logs (
   notes text
 );
 
+-- Generated session plans
+create table if not exists sessions (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamptz default now(),
+  date date not null,
+  session_type text not null,
+  location text not null default 'home_gym',
+  readiness_tier text not null,
+  is_deload boolean default false,
+  exercises jsonb not null default '[]',
+  overall_rpe integer,
+  notes text
+);
+
 -- RLS: allow all operations with the anon key (single-user app)
 alter table snapshots enable row level security;
 alter table logs enable row level security;
@@ -46,4 +60,9 @@ create policy "Allow all access to snapshots" on snapshots
   for all using (true) with check (true);
 
 create policy "Allow all access to logs" on logs
+  for all using (true) with check (true);
+
+alter table sessions enable row level security;
+
+create policy "Allow all access to sessions" on sessions
   for all using (true) with check (true);
