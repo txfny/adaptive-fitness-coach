@@ -19,13 +19,17 @@ The design is grounded in **Self-Determination Theory** (autonomy, competence, r
 
 ## Screenshots
 
-| Home | Check-In | Session Plan | Post-Workout Log |
-|------|----------|--------------|------------------|
-| ![Home](screenshots/home-placeholder.png) | ![Check-In](screenshots/checkin-placeholder.png) | ![Session](screenshots/session-placeholder.png) | ![Log](screenshots/log-placeholder.png) |
+### Dashboard
+![Dashboard](image.png)
 
-| Progress | Readiness Result | Desktop Layout |
-|----------|------------------|----------------|
-| ![Progress](screenshots/progress-placeholder.png) | ![Readiness](screenshots/readiness-placeholder.png) | ![Desktop](screenshots/desktop-placeholder.png) |
+### Check-In
+![Check-In](image-2.png)
+
+### Readiness Result
+![Readiness Result](image-3.png)
+
+### Progress
+![Progress](image-4.png)
 
 ## How It Works
 
