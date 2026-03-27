@@ -1,0 +1,81 @@
+{
+  "date": "2026-03-17",
+  "day_of_week": "Tuesday",
+  "snapshot": {
+    "hrv_ms": 49,
+    "rhr_bpm": 53,
+    "rhr_7day_avg": 53,
+    "rhr_delta": 0,
+    "sleep_hours": null,
+    "energy": 4,
+    "mood": null,
+    "cycle_day": 17,
+    "cycle_phase": "active",
+    "symptoms": null,
+    "symptom_load": 0,
+    "soreness": { "lower": 0, "upper": 0, "core": 0 },
+    "equipment": "home_gym",
+    "nutrition": null,
+    "notes": "HRV dropped from 114 to 49. 114 was an outlier spike, 49 is the real reading."
+  },
+  "readiness": {
+    "tier": "MODERATE",
+    "reasoning": "HRV -1.8 SD (LOW territory) but energy 4/5 and no soreness. Capped at MODERATE — volume reduced 20-30%, RPE cap 7."
+  },
+  "session_type": "elliptical + strength_upper + core",
+  "actual_exercises": [
+    {
+      "name": "Elliptical",
+      "sets_completed": 1,
+      "notes": "30 min warmup + YouTube"
+    },
+    {
+      "name": "Lat Pulldown",
+      "sets_completed": 2,
+      "reps_completed": "10, 10",
+      "load_used": "60 lb",
+      "notes": "Hold. Volume reduced per readiness."
+    },
+    {
+      "name": "Overhead Press",
+      "sets_completed": 2,
+      "reps_completed": "10, 10",
+      "load_used": "20 lb barbell",
+      "notes": "Hold."
+    },
+    {
+      "name": "Seated Row",
+      "sets_completed": 2,
+      "reps_completed": "10, 10",
+      "load_used": "60 lb",
+      "notes": "NEW exercise — locked in at 60 lb."
+    },
+    {
+      "name": "Chest Press",
+      "sets_completed": 2,
+      "reps_completed": "10, 10",
+      "load_used": "45 lb",
+      "notes": "Easy — bump to 50 lb next session."
+    },
+    {
+      "name": "Tricep Dip",
+      "sets_completed": 2,
+      "reps_completed": "8, 8",
+      "load_used": "15 lb DB",
+      "notes": "NEW exercise — locked in."
+    },
+    {
+      "name": "Core Block",
+      "sets_completed": 2,
+      "notes": "2 of 3 rounds completed. Hanging leg raises + knee raises superset, dead bug, plank hip dips, stomach vacuum. Missed third round."
+    }
+  ],
+  "apple_health": null,
+  "overall_rpe": null,
+  "energy_after": null,
+  "prediction_accuracy": "accurate",
+  "post_workout_biometrics": null,
+  "next_morning_recovery": { "hrv_ms": 74, "rhr_bpm": 52 },
+  "flags": [],
+  "notes": "Supersetted all strength. Volume cut to 2 sets per readiness. Two new exercises added: seated row and tricep dip."
+}

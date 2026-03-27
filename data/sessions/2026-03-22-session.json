@@ -1,0 +1,29 @@
+{
+  "date": "2026-03-22",
+  "day_of_week": "Sunday",
+  "snapshot": null,
+  "readiness": null,
+  "session_type": "rest",
+  "actual_exercises": [
+    {
+      "name": "Walking",
+      "notes": "Recovery day. Walking around, no formal workout."
+    }
+  ],
+  "apple_health": {
+    "steps": 10574,
+    "distance_mi": 4.15,
+    "active_calories": 304,
+    "resting_calories": 1264,
+    "total_calories": 1568,
+    "exercise_minutes": 29,
+    "avg_hr_day": 76,
+    "peak_hr": 136,
+    "peak_hr_note": "3-4pm, likely walking"
+  },
+  "overall_rpe": null,
+  "energy_after": null,
+  "next_morning_recovery": { "hrv_ms": 48, "rhr_bpm": 51 },
+  "flags": [],
+  "notes": "Recovery day after Amazing Race. Walking only. 10.5k steps."
+}

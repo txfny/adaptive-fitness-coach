@@ -1,0 +1,41 @@
+{
+  "date": "2026-03-25",
+  "day_of_week": "Wednesday",
+  "snapshot": {
+    "hrv_ms": 99,
+    "rhr_bpm": 53,
+    "rhr_7day_avg": 53,
+    "rhr_delta": 0,
+    "sleep_hours": null,
+    "energy": 5,
+    "mood": "flat",
+    "cycle_day": 25,
+    "cycle_phase": "placebo",
+    "symptoms": { "cramps": 2, "fatigue": 1 },
+    "symptom_load": 3,
+    "soreness": { "lower": 1, "upper": 0, "core": 0 },
+    "equipment": null,
+    "nutrition": "Fine, no flags.",
+    "notes": "Period day 2, heavy flow, cramping. Thighs still sore from Monday. Wanted more sleep."
+  },
+  "readiness": {
+    "tier": "MODERATE",
+    "reasoning": "HRV +9.3 SD (HIGH) but heavy flow, cramps, low energy, thigh soreness. Lowest signal wins."
+  },
+  "session_type": "active_recovery",
+  "actual_exercises": [
+    {
+      "name": "Walk (morning)",
+      "notes": "~20 min"
+    },
+    {
+      "name": "Walk (afternoon)",
+      "notes": "While doing chores"
+    }
+  ],
+  "apple_health": null,
+  "overall_rpe": null,
+  "energy_after": null,
+  "flags": [],
+  "notes": "Active recovery day. Walk only — user didn't feel like moving more. Period cramps + heavy flow. No evening session with bf."
+}

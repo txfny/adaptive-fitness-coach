@@ -1,0 +1,104 @@
+{
+  "date": "2026-03-16",
+  "day_of_week": "Monday",
+  "snapshot": {
+    "hrv_ms": 114,
+    "rhr_bpm": 55,
+    "rhr_7day_avg": 53,
+    "rhr_delta": 2,
+    "sleep_hours": 10.5,
+    "energy": 4,
+    "mood": 3,
+    "cycle_day": 16,
+    "cycle_phase": "active",
+    "symptoms": { "bloating": 0, "gi": 0, "cramps": 0, "fatigue": 1 },
+    "symptom_load": 1,
+    "soreness": { "lower": 0, "upper": 0, "core": 0 },
+    "equipment": "home_gym",
+    "nutrition": null,
+    "notes": "Just groggy. HRV 114 is an outlier spike."
+  },
+  "readiness": {
+    "tier": "HIGH",
+    "reasoning": "HRV +12.7 SD (outlier), RHR +2, sleep 10.5hrs. All signals green."
+  },
+  "session_type": "run + strength_lower + core",
+  "actual_exercises": [
+    {
+      "name": "Treadmill Run",
+      "sets_completed": 1,
+      "notes": "0-5min walk 4.0mph, 5-17min run 5.2mph, 17-23min run 5.5mph (held it), 23-28min walk cooldown. ~18min run portion.",
+      "actual_rpe": null
+    },
+    {
+      "name": "Hanging Leg Raises",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 10",
+      "load_used": "bodyweight"
+    },
+    {
+      "name": "Knee Raises",
+      "sets_completed": 3,
+      "reps_completed": "5, 5, 5",
+      "load_used": "bodyweight"
+    },
+    {
+      "name": "Dead Bug",
+      "sets_completed": 3,
+      "reps_completed": "10 each, 10 each, 10 each",
+      "load_used": "bodyweight"
+    },
+    {
+      "name": "Plank Hip Dips",
+      "sets_completed": 3,
+      "reps_completed": "20, 20, 20",
+      "load_used": "bodyweight"
+    },
+    {
+      "name": "Stomach Vacuum",
+      "sets_completed": 3,
+      "reps_completed": "10 sec, 10 sec, 10 sec",
+      "load_used": "bodyweight"
+    },
+    {
+      "name": "Goblet Squat",
+      "sets_completed": 3,
+      "reps_completed": "12, 12, 12",
+      "load_used": "25 lb DB",
+      "actual_rpe": 5,
+      "notes": "Easy — flagged for bump to 30 lb next session."
+    },
+    {
+      "name": "Sumo Squat",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 10",
+      "load_used": "25 lb DB",
+      "actual_rpe": 6,
+      "notes": "New exercise. Easy first set, harder second, easy third. Hold weight."
+    },
+    {
+      "name": "Romanian Deadlift",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 10",
+      "load_used": "25 lb each DB",
+      "actual_rpe": 6,
+      "notes": "Solid."
+    },
+    {
+      "name": "Hip Thrust",
+      "sets_completed": 3,
+      "reps_completed": "12, 12, 12",
+      "load_used": "25 lb / 35 lb / 45 lb",
+      "actual_rpe": 6,
+      "notes": "Progressive test: 25→35→45. All manageable. 45 lb locked in as new baseline."
+    }
+  ],
+  "apple_health": null,
+  "overall_rpe": null,
+  "energy_after": null,
+  "prediction_accuracy": "accurate",
+  "post_workout_biometrics": null,
+  "next_morning_recovery": { "hrv_ms": 49, "rhr_bpm": 53 },
+  "flags": ["Did run + core before strength (wrong order per rules — corrected going forward)"],
+  "notes": "First session of week 2. Everything felt easy-moderate. Hip thrust progressed aggressively."
+}

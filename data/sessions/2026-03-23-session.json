@@ -1,0 +1,109 @@
+{
+  "date": "2026-03-23",
+  "day_of_week": "Monday",
+  "snapshot": {
+    "hrv_ms": 48,
+    "rhr_bpm": 51,
+    "rhr_7day_avg": 53,
+    "rhr_delta": -2,
+    "sleep_hours": null,
+    "energy": 4,
+    "mood": null,
+    "cycle_day": 23,
+    "cycle_phase": "active",
+    "symptoms": { "fatigue": 1 },
+    "symptom_load": 1,
+    "soreness": { "lower": 0, "upper": 0, "core": 0 },
+    "equipment": "home_gym",
+    "nutrition": "Unclear — 'ig ok since i still have a flat stomach.' No strong signal either way.",
+    "notes": "Coming off 2 active days (16k + 10k steps). HRV dipped. Just tired."
+  },
+  "readiness": {
+    "tier": "LOW-MODERATE",
+    "reasoning": "HRV -2.0 SD (LOW territory). RHR fine, no soreness, but energy flat and sleep insufficient. Lowest signal wins. Volume cut to 2 sets, RPE cap 7."
+  },
+  "session_type": "elliptical + strength_lower + core",
+  "actual_exercises": [
+    {
+      "name": "Elliptical",
+      "sets_completed": 1,
+      "notes": "35 min warmup + YouTube"
+    },
+    {
+      "name": "Goblet Squat",
+      "sets_completed": 2,
+      "reps_completed": "12, 12",
+      "load_used": "30 lb DB",
+      "actual_rpe": 6,
+      "notes": "Set 1 easy, set 2 a little challenging. Hold."
+    },
+    {
+      "name": "Sumo Squat",
+      "sets_completed": 2,
+      "reps_completed": "10, 10",
+      "load_used": "30 lb DB",
+      "actual_rpe": 7,
+      "notes": "PROGRESSED from 25 lb. Legs shaking on set 2. Lock in 30."
+    },
+    {
+      "name": "Romanian Deadlift",
+      "sets_completed": 2,
+      "reps_completed": "10, 10",
+      "load_used": "25 lb each DB",
+      "actual_rpe": 6,
+      "notes": "Good. Hold — grip is the limiter."
+    },
+    {
+      "name": "Hip Thrust",
+      "sets_completed": 2,
+      "reps_completed": "12, 12",
+      "load_used": "50 lb DB",
+      "actual_rpe": 5,
+      "notes": "PROGRESSED from 45 lb. Pretty easy. Lock in 50."
+    },
+    {
+      "name": "Core Block",
+      "sets_completed": 2,
+      "notes": "2 full rounds. Hanging leg raises, knee raises, dead bug (felt good burn with stretch), plank hip dips, stomach vacuum. Lowkey easy but good burn."
+    }
+  ],
+  "apple_health": {
+    "elliptical": {
+      "time": "10:04-10:39",
+      "duration_min": 35.3,
+      "calories": 245,
+      "avg_hr": 155,
+      "peak_hr": 164,
+      "hr_at_stop": 158,
+      "hr_1min_post": 132,
+      "hrr_delta": 26,
+      "hrr_assessment": "good"
+    },
+    "strength": {
+      "notes": "Not tracked — forgot to start workout on watch. Gap 10:39-11:03 (~24 min)."
+    },
+    "core": {
+      "time": "11:03-11:10",
+      "duration_min": 6.5,
+      "calories": 27,
+      "avg_hr": 130,
+      "peak_hr": 176,
+      "notes": "Peak HR 176 during core — higher than elliptical. Dead bugs/plank hip dips driving it."
+    },
+    "total_active_calories": 525,
+    "total_exercise_minutes": 51
+  },
+  "overall_rpe": 5.5,
+  "energy_after": 4.5,
+  "prediction_accuracy": "accurate",
+  "post_workout_biometrics": {
+    "hrr_delta": 26,
+    "hrr_assessment": "good"
+  },
+  "next_morning_recovery": { "hrv_ms": 73, "rhr_bpm": 50 },
+  "flags": [
+    "Trained fasted — got nauseous between RDL sets. Second day of vague eating.",
+    "Strength portion not tracked on Apple Watch."
+  ],
+  "notes": "Reduced volume session (2 sets) per LOW-MOD readiness. Two progressions: sumo squat 25→30, hip thrust 45→50. Nausea from fasted training."
+}

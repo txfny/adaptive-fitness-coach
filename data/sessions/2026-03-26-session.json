@@ -1,0 +1,103 @@
+{
+  "date": "2026-03-26",
+  "day_of_week": "Thursday",
+  "snapshot": {
+    "hrv_ms": 52,
+    "rhr_bpm": 51,
+    "rhr_7day_avg": 53,
+    "rhr_delta": -2,
+    "sleep_hours": null,
+    "energy": 6,
+    "mood": "neutral",
+    "cycle_day": 26,
+    "cycle_phase": "placebo",
+    "symptoms": { "cramps": 0, "flow": "medium" },
+    "symptom_load": 1,
+    "soreness": { "lower": 0, "upper": 0, "core": 0 },
+    "equipment": "home_gym",
+    "nutrition": "Normal, no flags. Ate lunch at 12, trained at 5.",
+    "notes": "Period day 3-4, flow settling back to medium."
+  },
+  "readiness": {
+    "tier": "MODERATE",
+    "reasoning": "HRV -1.1 SD (MODERATE), RHR -2 (HIGH), sleep ok, energy ok. Everything middle of the road."
+  },
+  "session_type": "elliptical + strength_full_body + core",
+  "split_session": true,
+  "actual_exercises": [
+    {
+      "name": "Elliptical",
+      "sets_completed": 1,
+      "notes": "33 min morning solo",
+      "time": "AM"
+    },
+    {
+      "name": "Shoulder Press (machine)",
+      "sets_completed": 3,
+      "reps_completed": "10, 7, 7",
+      "load_used": "30 lb",
+      "actual_rpe": 8,
+      "notes": "Left arm asymmetry again — 2nd occurrence. Failed at 7 on sets 2-3. Switching to DB press next session. Also accidentally started on chest press at 35lb before realizing.",
+      "time": "PM"
+    },
+    {
+      "name": "Seated Row",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 8",
+      "load_used": "60 lb / 65 lb / 65 lb",
+      "actual_rpe": 7,
+      "notes": "PROGRESSED from 60 to 65. Set 1 at 60 easy, bumped. Struggled on set 2, dropped at 8 on set 3. Lock in 65.",
+      "time": "PM"
+    },
+    {
+      "name": "Romanian Deadlift",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 10",
+      "load_used": "25 lb each DB",
+      "actual_rpe": 6,
+      "notes": "Coasted through. Hold — grip still the limiter.",
+      "time": "PM"
+    },
+    {
+      "name": "Goblet Squat",
+      "sets_completed": 3,
+      "reps_completed": "12, 12, 12",
+      "load_used": "30 lb DB",
+      "actual_rpe": 5,
+      "notes": "Easy all 3 sets on a MODERATE day. Bump to 35 next lower session.",
+      "time": "PM"
+    },
+    {
+      "name": "Overhead Tricep Extension (cable)",
+      "sets_completed": 3,
+      "reps_completed": "12, 11, 7",
+      "load_used": "12.5 lb / 17.5 lb / 17.5 lb",
+      "actual_rpe": 8,
+      "notes": "Supersetted with goblet squat. 17.5 too aggressive — steep drop-off. Try 15 lb next session.",
+      "time": "PM"
+    },
+    {
+      "name": "Core Block",
+      "sets_completed": 3,
+      "notes": "3 full rounds, pushed through after superset fatigue.",
+      "time": "PM"
+    }
+  ],
+  "apple_health": null,
+  "overall_rpe": 7.5,
+  "energy_after": "hyped",
+  "prediction_accuracy": "accurate",
+  "post_workout_biometrics": null,
+  "next_morning_recovery": null,
+  "period": {
+    "day": 26,
+    "flow": "medium",
+    "type": "withdrawal_bleed"
+  },
+  "flags": [
+    "Shoulder press L/R asymmetry — 2nd occurrence. Switching to DB press next upper session.",
+    "Tricep extension 12.5→17.5 too big a jump. Try 15 next session.",
+    "Goblet squat 30lb easy 3x12 on MODERATE day — bump to 35."
+  ],
+  "notes": "Full body with bf. Seated row progressed 60→65. Goblet squat ready for 35. Shoulder press needs to switch to DB. Ate before training — no nausea. Good energy after."
+}

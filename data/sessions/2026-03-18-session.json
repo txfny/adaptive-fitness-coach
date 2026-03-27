@@ -1,0 +1,95 @@
+{
+  "date": "2026-03-18",
+  "day_of_week": "Wednesday",
+  "snapshot": {
+    "hrv_ms": 74,
+    "rhr_bpm": 52,
+    "rhr_7day_avg": 53,
+    "rhr_delta": -1,
+    "sleep_hours": null,
+    "energy": 5,
+    "mood": 3,
+    "cycle_day": 18,
+    "cycle_phase": "active",
+    "symptoms": { "bloating": 0, "gi": 0, "cramps": 0, "fatigue": 2 },
+    "symptom_load": 2,
+    "soreness": { "lower": 0, "upper": 0, "core": 0 },
+    "equipment": "home_gym",
+    "nutrition": "Solid — 2 eggs + 2 whites + yogurt w/ ketchup sriracha + tomatoes (noon), green apple 5pm, japchae w/ beef + yogurt + bf's bulgogi 8pm. Protein every meal, no binge. Possibly under-eating (est 1000-1200 cal).",
+    "notes": "Poor sleep — fragmented, kept waking to pee. Drank too much liquid before bed."
+  },
+  "readiness": {
+    "tier": "MODERATE",
+    "reasoning": "HRV +3.8 SD (HIGH), RHR -1 (HIGH), but sleep fragmented (MODERATE) and fatigue 2. Lowest signal wins."
+  },
+  "session_type": "run_only",
+  "actual_exercises": [
+    {
+      "name": "Treadmill Walk (warmup)",
+      "sets_completed": 1,
+      "notes": "5 min warmup walk"
+    },
+    {
+      "name": "Treadmill Run",
+      "sets_completed": 1,
+      "notes": "20 min at comfortable pace, no target, no progression"
+    },
+    {
+      "name": "Treadmill Walk (cooldown)",
+      "sets_completed": 1,
+      "notes": "3 min cooldown"
+    }
+  ],
+  "apple_health": {
+    "walk_warmup": {
+      "time": "8:50-8:55",
+      "distance_mi": 0.31,
+      "duration_min": 5.1,
+      "calories": 19,
+      "avg_hr": 108,
+      "peak_hr": 130
+    },
+    "run": {
+      "time": "8:55-9:18",
+      "distance_mi": 2.05,
+      "duration_min": 23.1,
+      "avg_pace_per_mi": "11:16",
+      "calories": 183,
+      "avg_hr": 176,
+      "peak_hr": 190,
+      "hr_at_stop": 188,
+      "hr_1min_post": 177,
+      "hrr_delta": 11,
+      "hrr_assessment": "flag"
+    },
+    "walk_cooldown": {
+      "time": "9:18-9:24",
+      "duration_min": 5.2,
+      "calories": 24,
+      "peak_hr": 187,
+      "hr_at_stop": 139,
+      "hr_1min_post": 115,
+      "hrr_delta": 24,
+      "hrr_assessment": "good"
+    },
+    "total_distance_mi": 2.36,
+    "total_duration_min": 33.5,
+    "total_calories": 226
+  },
+  "overall_rpe": null,
+  "energy_after": null,
+  "prediction_accuracy": "accurate",
+  "post_workout_biometrics": {
+    "hr_at_stop_bpm": 188,
+    "hr_1min_recovery_bpm": 177,
+    "hrr_delta": 11,
+    "hrr_assessment": "flag"
+  },
+  "next_morning_recovery": { "hrv_ms": 64, "rhr_bpm": 53 },
+  "flags": [
+    "HRR 11 bpm at run stop — below 12 bpm threshold (Cole 1999). Poor parasympathetic recovery.",
+    "Avg HR ~176, peak 190 on a recovery-pace run — elevated HR response. Likely fragmented sleep + cumulative fatigue.",
+    "Team dinner — skipped evening session with bf."
+  ],
+  "notes": "Active recovery day. Run only, no strength or core. Team dinner cancelled evening session with bf."
+}

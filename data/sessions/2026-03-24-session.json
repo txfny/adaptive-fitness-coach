@@ -1,0 +1,141 @@
+{
+  "date": "2026-03-24",
+  "day_of_week": "Tuesday",
+  "snapshot": {
+    "hrv_ms": 73,
+    "rhr_bpm": 50,
+    "rhr_7day_avg": 53,
+    "rhr_delta": -3,
+    "sleep_hours": null,
+    "energy": 6,
+    "mood": null,
+    "cycle_day": 24,
+    "cycle_phase": "active",
+    "symptoms": {},
+    "symptom_load": 0,
+    "soreness": { "lower": 1, "upper": 0, "core": 0 },
+    "equipment": "home_gym",
+    "nutrition": "Fine, no flags.",
+    "notes": "Back of legs sore from Monday's squats. Wanted more sleep."
+  },
+  "readiness": {
+    "tier": "HIGH",
+    "reasoning": "HRV +3.6 SD, RHR -3, no upper soreness (upper day). Energy moderate but everything else green. Full programming."
+  },
+  "session_type": "elliptical + strength_upper + core",
+  "split_session": true,
+  "actual_exercises": [
+    {
+      "name": "Elliptical",
+      "sets_completed": 1,
+      "notes": "30 min morning solo + YouTube",
+      "time": "AM"
+    },
+    {
+      "name": "Chest Press",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 10",
+      "load_used": "50 lb",
+      "actual_rpe": 5,
+      "notes": "PROGRESSED from 45 lb. Pretty easy all 3 sets. Bump to 55 next.",
+      "time": "PM"
+    },
+    {
+      "name": "Lat Pulldown",
+      "sets_completed": 3,
+      "reps_completed": "10, 8, 10",
+      "load_used": "60 lb / 75 lb / 75 lb",
+      "actual_rpe": 7,
+      "notes": "Set 1 at 60 felt easy, bumped to 75. BUT different bar/grip attachment — do NOT lock in 75. Retest at 65 with regular bar.",
+      "time": "PM"
+    },
+    {
+      "name": "Tricep Dip",
+      "sets_completed": 3,
+      "reps_completed": "10, 8, 8",
+      "load_used": "15 lb / 20 lb / 20 lb",
+      "actual_rpe": 7,
+      "notes": "PROGRESSED from 15 to 20 lb. Set 1 at 15 easy, bumped to 20. Lock in 20.",
+      "time": "PM"
+    },
+    {
+      "name": "Overhead Press",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 8",
+      "load_used": "20 lb barbell",
+      "actual_rpe": 8,
+      "notes": "Hard. Dreaded set 3. Still the grinder. Hold until clean 3x10.",
+      "time": "PM"
+    },
+    {
+      "name": "Seated Row",
+      "sets_completed": 0,
+      "notes": "Skipped — machine taken. Already hit lat pulldown (same pull pattern).",
+      "time": "PM"
+    },
+    {
+      "name": "Core Block",
+      "sets_completed": 3,
+      "notes": "3 full rounds supersetted. Legs felt heavy during leg raises (Monday soreness). Pushed through all 3 rounds.",
+      "time": "PM"
+    }
+  ],
+  "apple_health": {
+    "elliptical": {
+      "time": "8:52-9:23",
+      "duration_min": 30.1,
+      "calories": 213,
+      "avg_hr": 160,
+      "peak_hr": 169,
+      "hr_at_stop": 168,
+      "hr_1min_post": 136,
+      "hrr_delta": 32,
+      "hrr_assessment": "good"
+    },
+    "strength": {
+      "time": "17:02-17:35",
+      "duration_min": 33.5,
+      "calories": 111,
+      "avg_hr": 115,
+      "peak_hr": 155,
+      "hr_at_stop": 124,
+      "hr_1min_post": 124,
+      "hrr_delta": 0,
+      "hrr_note": "Transitioned straight into core — no recovery window"
+    },
+    "core": {
+      "time": "17:39-17:49",
+      "duration_min": 9.6,
+      "calories": 33,
+      "avg_hr": 130,
+      "peak_hr": 168,
+      "hr_at_stop": 152,
+      "hr_1min_post": 114,
+      "hrr_delta": 38,
+      "hrr_assessment": "excellent"
+    },
+    "total_duration_min": 73,
+    "total_calories": 357
+  },
+  "overall_rpe": 7,
+  "energy_after": "good",
+  "prediction_accuracy": "accurate",
+  "post_workout_biometrics": {
+    "hrr_delta": 38,
+    "hrr_assessment": "excellent",
+    "note": "Post-core HRR"
+  },
+  "next_morning_recovery": { "hrv_ms": 99, "rhr_bpm": 53 },
+  "period": {
+    "started": true,
+    "day": 24,
+    "flow": "medium",
+    "type": "withdrawal_bleed",
+    "notes": "On Tyblume (combined OC). No intensity adjustments per rules."
+  },
+  "flags": [
+    "Lat pulldown grip variable — different bar made 75lb feel easier. Retest at 65 with regular bar before locking in.",
+    "Period started day 24 — medium flow, cramps not yet."
+  ],
+  "notes": "Split session: elliptical AM solo, strength PM with bf. Three progression attempts: chest press 45→50 (confirmed), tricep dip 15→20 (confirmed), lat pulldown 60→75 (unconfirmed — grip variable). OHP still the grinder at 20lb. Period started."
+}

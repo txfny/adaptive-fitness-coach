@@ -1,0 +1,57 @@
+{
+  "date": "2026-03-20",
+  "day_of_week": "Friday",
+  "snapshot": {
+    "hrv_ms": 51,
+    "rhr_bpm": 50,
+    "rhr_7day_avg": 53,
+    "rhr_delta": -3,
+    "sleep_hours": 10,
+    "energy": 5,
+    "mood": null,
+    "cycle_day": 20,
+    "cycle_phase": "active",
+    "symptoms": {},
+    "symptom_load": 0,
+    "soreness": { "lower": 0, "upper": 1, "core": 0 },
+    "equipment": "home_gym",
+    "nutrition": "Eating went okay, not crazy bloated from dinner (restaurant food).",
+    "notes": "10 hrs sleep still tired. Underarm soreness from Thursday's pressing and tricep work."
+  },
+  "readiness": {
+    "tier": "MODERATE",
+    "reasoning": "HRV -1.3 SD (MODERATE), sleep quantity good but still tired. Lowest signal = HRV + subjective energy."
+  },
+  "session_type": "elliptical_only",
+  "actual_exercises": [
+    {
+      "name": "Elliptical",
+      "sets_completed": 1,
+      "notes": "Started on treadmill, switched to elliptical — running regularly was too much on the legs. 35 min. Self-regulated, not transit."
+    }
+  ],
+  "apple_health": {
+    "elliptical": {
+      "duration_min": 35,
+      "calories": 264,
+      "avg_hr": 139,
+      "peak_hr": 172,
+      "hrr_delta": 30,
+      "hrr_assessment": "good"
+    }
+  },
+  "overall_rpe": null,
+  "energy_after": null,
+  "prediction_accuracy": "accurate",
+  "post_workout_biometrics": {
+    "hrr_delta": 30,
+    "hrr_assessment": "good"
+  },
+  "next_morning_recovery": null,
+  "flags": [
+    "Self-regulated off treadmill to elliptical — good body awareness after 3 strength days in 4.",
+    "No evening session. Weekly volume already met (3 strength Mon/Tue/Thu).",
+    "HRV dipped to 51ms — body processing Mon-Thu training load."
+  ],
+  "notes": "Cardio only. Legs too tired for running after 3 strength days. Good self-regulation."
+}

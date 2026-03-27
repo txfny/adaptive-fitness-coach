@@ -22,7 +22,14 @@ Ask for all at once. Keep it quick — don't make this feel like a medical quest
 7. **Mood** (1–5, quick gut check)
 8. **Equipment today** — confirm home gym or Planet Fitness
 9. **Soreness?** — lower body, upper body, core (0–3 each)
-10. **Notes** — anything else (stressed, fasted, didn't eat well, etc.)
+10. **How'd eating go yesterday?** — light check-in, not a food log. Looking for:
+    - Did you eat enough during the day? (under-eating leads to evening binges)
+    - Any binge or restriction episodes?
+    - Protein at meals? (rough sense, not grams)
+    - How's the gut? (bloating, digestion)
+    - **Tone:** casual, no guilt, no policing. Flag patterns over weeks, not individual days.
+    - **ED-aware:** If responses suggest restricting or binge/restrict cycling, name it gently and check in. Never push past user's stated goal weight (105 lbs).
+11. **Notes** — anything else (stressed, fasted, didn't eat well, etc.)
 
 **If it's placebo week:** Also ask about flow (light/moderate/heavy/none).
 
@@ -32,7 +39,7 @@ Ask for all at once. Keep it quick — don't make this feel like a medical quest
 
 Don't list all 10 as a numbered checklist every time. After the first few sessions, the user will know the routine. You can ask:
 
-> "Numbers for today? HRV, RHR, sleep, energy, pill day, any symptoms or soreness?"
+> "Numbers for today? HRV, RHR, sleep, energy, pill day, any symptoms or soreness? How'd eating go yesterday?"
 
 If they give you partial info, ask for what's missing. Don't block on optional fields.
 
@@ -61,6 +68,7 @@ Snapshot — [date]
   Mood:       [X]/5
   Equipment:  [home_gym / planet_fitness]
   Soreness:   lower [X] | upper [X] | core [X]
+  Nutrition:  [quick summary — ate well / under-ate / binged / etc.]
   Notes:      [text or "none"]
 ```
 

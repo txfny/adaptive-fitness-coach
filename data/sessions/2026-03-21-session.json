@@ -1,0 +1,50 @@
+{
+  "date": "2026-03-21",
+  "day_of_week": "Saturday",
+  "snapshot": {
+    "hrv_ms": 67,
+    "rhr_bpm": 53,
+    "rhr_7day_avg": 53,
+    "rhr_delta": 0,
+    "sleep_hours": null,
+    "energy": 3,
+    "mood": null,
+    "cycle_day": 21,
+    "cycle_phase": "active",
+    "symptoms": { "fatigue": 1 },
+    "symptom_load": 1,
+    "soreness": { "lower": 0, "upper": 1, "core": 0 },
+    "equipment": null,
+    "nutrition": null,
+    "notes": "Arms still sore. Tired. Amazing Race day."
+  },
+  "readiness": {
+    "tier": "MODERATE",
+    "reasoning": "HRV +2.2 SD (HIGH) but energy low, tired, arms sore. Lowest signal wins."
+  },
+  "session_type": "amazing_race_nyc",
+  "actual_exercises": [
+    {
+      "name": "Amazing Race NYC — scavenger hunt",
+      "notes": "Walking/running around NYC all day. Sedentary morning, heavy activity 4pm onward, bulk of steps 5-7pm."
+    }
+  ],
+  "apple_health": {
+    "steps": 16791,
+    "distance_mi": 6.61,
+    "active_calories": 480,
+    "resting_calories": 1284,
+    "total_calories": 1764,
+    "exercise_minutes": 47,
+    "avg_hr_day": 78,
+    "peak_hr": 159,
+    "peak_hr_note": "6-7pm during race"
+  },
+  "overall_rpe": null,
+  "energy_after": null,
+  "prediction_accuracy": null,
+  "post_workout_biometrics": null,
+  "next_morning_recovery": null,
+  "flags": [],
+  "notes": "Amazing Race NYC scavenger hunt. No formal workout. 16.8k steps, peak HR 159 during the race. Counts as Saturday active day."
+}

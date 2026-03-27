@@ -1,0 +1,127 @@
+{
+  "date": "2026-03-19",
+  "day_of_week": "Thursday",
+  "snapshot": {
+    "hrv_ms": 64,
+    "rhr_bpm": 53,
+    "rhr_7day_avg": 53,
+    "rhr_delta": 0,
+    "sleep_hours": 7,
+    "energy": 5,
+    "mood": null,
+    "cycle_day": 19,
+    "cycle_phase": "active",
+    "symptoms": { "bloating": 0, "gi": 0, "cramps": 0, "fatigue": 2 },
+    "symptom_load": 2,
+    "soreness": { "lower": 0, "upper": 0, "core": 0 },
+    "equipment": "home_gym",
+    "nutrition": "Same breakfast (eggs/yogurt), steak + fries for dinner, grapes & blueberries + 2 donuts. Low carb day, body wanted energy. Not a binge.",
+    "notes": "Fatigue with no clear cause. Not bloated from food."
+  },
+  "readiness": {
+    "tier": "HIGH",
+    "reasoning": "HRV +1.6 SD (HIGH), RHR 0 delta (HIGH), sleep 7hrs (HIGH). Fatigue noted but all objective signals green. Full programming."
+  },
+  "session_type": "elliptical + strength_full_body + core",
+  "actual_exercises": [
+    {
+      "name": "Elliptical",
+      "sets_completed": 1,
+      "notes": "34 min warmup"
+    },
+    {
+      "name": "Goblet Squat",
+      "sets_completed": 3,
+      "reps_completed": "12, 12, 12",
+      "load_used": "30 lb DB",
+      "actual_rpe": 5,
+      "notes": "Progressed from 25 lb. Easy."
+    },
+    {
+      "name": "Shoulder Press (machine)",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 10",
+      "load_used": "30 lb",
+      "actual_rpe": 8,
+      "notes": "NEW — subbed for OHP (bar taken). Hard. Left arm felt it more than right — asymmetry flagged."
+    },
+    {
+      "name": "Romanian Deadlift",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 8",
+      "load_used": "25 lb each DB",
+      "actual_rpe": 7,
+      "notes": "Form clicked sets 2-3. Arms gave out before legs on set 3."
+    },
+    {
+      "name": "Seated Row",
+      "sets_completed": 3,
+      "reps_completed": "10, 10, 10",
+      "load_used": "60 lb",
+      "actual_rpe": 8,
+      "notes": "Almost failed set 3. Hold weight."
+    },
+    {
+      "name": "Overhead Tricep Extension",
+      "sets_completed": 1,
+      "reps_completed": null,
+      "load_used": "12.5 lb cable",
+      "notes": "NEW — first time using cable at home gym. Felt it in triceps."
+    },
+    {
+      "name": "Core Block",
+      "sets_completed": 3,
+      "notes": "3 full rounds, minimal rest. 45 sec rest between rounds 2-3. Hanging leg raises, knee raises, dead bug, plank hip dips, stomach vacuum."
+    }
+  ],
+  "apple_health": {
+    "elliptical": {
+      "time": "9:05-9:39",
+      "duration_min": 34,
+      "calories": 243,
+      "avg_hr": 163,
+      "peak_hr": 173,
+      "hr_at_stop": 157,
+      "hr_1min_post": 133,
+      "hrr_delta": 24,
+      "hrr_assessment": "good"
+    },
+    "strength": {
+      "time": "9:41-10:25",
+      "duration_min": 42.5,
+      "calories": 224,
+      "avg_hr": 130,
+      "peak_hr": 181,
+      "peak_hr_note": "~9:48 AM, ~7 min in = goblet squat",
+      "hr_at_stop": 146,
+      "hr_1min_post": 127,
+      "hrr_delta": 19,
+      "hrr_assessment": "good"
+    },
+    "core": {
+      "time": "10:25-10:36",
+      "duration_min": 10.9,
+      "calories": 46,
+      "avg_hr": 145,
+      "peak_hr": 173,
+      "hr_at_stop": 146,
+      "hr_1min_post": 141,
+      "hrr_delta": 5,
+      "hrr_assessment": "n/a — still elevated from weights"
+    },
+    "total_duration_min": 87,
+    "total_calories": 513
+  },
+  "overall_rpe": null,
+  "energy_after": null,
+  "prediction_accuracy": "accurate",
+  "post_workout_biometrics": null,
+  "next_morning_recovery": { "hrv_ms": 51, "rhr_bpm": 50 },
+  "flags": [
+    "Shoulder press left/right asymmetry — monitor, switch to DB press if persists.",
+    "RDL grip giving out before legs — normal for early stages, hold weight.",
+    "Peak HR 181 during goblet squat 30lb — high for an easy compound lift.",
+    "Cables at home gym are fine — only avoids PF cables."
+  ],
+  "notes": "Full body strength. Two progressions: goblet squat to 30lb, new cable tricep extension. No evening session with bf."
+}

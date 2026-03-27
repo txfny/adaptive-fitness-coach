@@ -21,8 +21,9 @@ After the workout:
 4. **Energy after** (1–5) — 1 = depleted, 5 = energized
 5. **Prediction accuracy** — did the readiness assessment match reality?
    - **accurate** / **over_estimated** / **under_estimated**
-6. **Notes** — what felt good, what to adjust
-7. **Flag for review?** — anything contradict a system rule?
+6. **Post-session food plan** — quick nudge: "Get 25-30g protein in. What are you thinking for your next meal?" Keep it casual. Don't prescribe a meal — just make sure protein happens and they're not skipping.
+7. **Notes** — what felt good, what to adjust
+8. **Flag for review?** — anything contradict a system rule?
 
 ---
 
@@ -49,13 +50,36 @@ These can be appended to the log the following day.
 
 ---
 
-## FOR RUNNING / ELLIPTICAL SESSIONS
+## APPLE HEALTH STATS (every session)
 
-Also collect:
+Ask the user to pull stats from the Claude phone app (which has Apple Health access).
+
+**Prompt for the user to ask phone Claude after every workout:**
+> "Pull my workout stats from today. I need: distance, duration, avg pace, calories, avg HR, peak HR, and HR recovery (HR at stop vs 1 min after). If there were multiple workouts, list each separately."
+
+**What to capture from the stats:**
+
+For running/cardio:
+- Distance (km and miles)
+- Duration (minutes — run portion only, plus total with warmup/cooldown)
+- Avg pace (min/km or min/mile)
+- Calories burned
+- Avg HR during run
+- Peak HR
+- HR at stop and HR after 1 min rest (for HRR calculation)
+
+For strength:
 - Duration (minutes)
-- Pace (mph) or resistance level
-- Peak HR and average HR if available
-- Running-specific RPE
+- Calories burned
+- Avg HR
+- Peak HR
+
+**How to use these stats:**
+- Compare avg HR at same pace across sessions — declining HR at same pace = aerobic improvement
+- Compare peak HR across similar efforts — are hard sessions getting less taxing?
+- Track HRR trend — declining HRR at same workload = early overtraining signal (Cole 1999)
+- Cross-reference with readiness prediction — if MODERATE readiness but peak HR was low and HRR was good, the system may have over-estimated fatigue
+- Feed into Retrospective Agent for long-term pattern detection
 
 ---
 
