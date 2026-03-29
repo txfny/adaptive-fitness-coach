@@ -6,3 +6,10 @@ __pycache__/
 *.pyc
 node_modules/
 .next/
+
+# Personal training data
+data/sessions/
+
+# Personal drafts
+docs/linkedin-post.md
+docs/linkedin-questions.md
